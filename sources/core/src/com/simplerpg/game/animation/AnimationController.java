@@ -7,12 +7,11 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import java.io.*;
 import java.util.Scanner;
 
-
 public class AnimationController {
     private AnimationState[] animationStates;
     private int currentStateIndex = 0;
     private AnimationState currentState;
-    private int defaultStateIndex = 8;
+    private int defaultStateIndex = 0;
     private float elapsedTime = 0f;
 
     public AnimationController(String pathName) throws IOException{

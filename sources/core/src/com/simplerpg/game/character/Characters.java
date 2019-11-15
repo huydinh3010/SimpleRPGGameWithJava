@@ -14,7 +14,8 @@ public class Characters extends GameObject {
 
     }
 
-    public Characters(String name, Vector2 position, float rotation, Vector2 scale, Sprite sprite, AnimationController animationController) {
+    public Characters(String name, Vector2 position, float rotation, Vector2 scale, Sprite sprite,
+                      AnimationController animationController) {
         super(name, position, rotation, scale, sprite, animationController);
     }
 
@@ -48,19 +49,19 @@ public class Characters extends GameObject {
         direction = newDirection;
         switch (direction){
             case UP:
-                velocity = new Vector2(0, 1);
+                velocity = new Vector2(0, 3);
                 animName = "move_up";
                 break;
             case RIGHT:
-                velocity = new Vector2(1, 0);
+                velocity = new Vector2(3, 0);
                 animName = "move_right";
                 break;
             case DOWN:
-                velocity = new Vector2(0, -1);
+                velocity = new Vector2(0, -3);
                 animName = "move_down";
                 break;
             case LEFT:
-                velocity = new Vector2(-1, 0);
+                velocity = new Vector2(-3, 0);
                 animName = "move_left";
                 break;
         }

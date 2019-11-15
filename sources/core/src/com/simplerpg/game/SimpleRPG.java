@@ -5,8 +5,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.simplerpg.game.animation.AnimationController;
-import com.simplerpg.game.character.Characters;
-import com.simplerpg.game.character.Direction;
+import com.simplerpg.game.character.*;
 import com.simplerpg.game.tilemap.*;
 import org.omg.PortableInterceptor.INACTIVE;
 
@@ -16,18 +15,22 @@ public class SimpleRPG implements ApplicationListener, InputProcessor {
 	SpriteBatch batch;
 	TileMap tileMap = new TileMap();
 	Characters character;
-	AnimationController animationController;
+	Enemy spider;
+
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		tileMap.loadMapFromArray(TileMap.test);
 		Gdx.input.setInputProcessor(this);
 		try {
-			animationController = new AnimationController("anims/player.anim");
+			character = new Characters("pipyaka", new Vector2(0, 0), 0.0f, new Vector2(1,1), null,
+					new AnimationController("anims/player.anim"));
+			spider = new Enemy("Spider", new Vector2 (100, 100), 0.0f, new Vector2(1,1), null,
+					new AnimationController("anims/spider.anim"), Difficulty.MEDIUM, character);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		character = new Characters("pipyaka", new Vector2(0, 0), 0.0f, new Vector2(1,1), null, animationController);
+
 
 	}
 
@@ -43,7 +46,9 @@ public class SimpleRPG implements ApplicationListener, InputProcessor {
 		batch.begin();
 		tileMap.draw(batch);
 		character.update();
+		spider.update();
 		character.draw(batch);
+		spider.draw(batch);
 		batch.end();
 	}
 
@@ -59,7 +64,6 @@ public class SimpleRPG implements ApplicationListener, InputProcessor {
 
 	public void dispose(){
 		batch.dispose();
-
 	}
 
 
