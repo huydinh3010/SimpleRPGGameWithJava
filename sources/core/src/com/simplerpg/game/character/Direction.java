@@ -6,7 +6,8 @@ public enum Direction {
     UP,
     LEFT,
     DOWN,
-    RIGHT;
+    RIGHT,
+    IDLE;
 
     private static final Direction[] VALUES = values();
     private static final int SIZE = VALUES.length;

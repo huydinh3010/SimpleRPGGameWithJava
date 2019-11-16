@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.simplerpg.game.GameObject;
 import com.simplerpg.game.animation.AnimationController;
+import com.simplerpg.game.tilemap.TileMap;
 import com.badlogic.gdx.Gdx;
 import java.util.Random;
 import static java.lang.Math.abs;
@@ -14,31 +15,33 @@ public class Enemy extends GameObject {
 
     private Direction direction = Direction.DOWN;
     private Vector2 velocity = new Vector2(0, 0);
-    private int spawnTime; // thoi gian spawn
+    // private int spawnTime; // thoi gian spawn, de ra ngoai class nay thi hop ly hon
     private int hp;
     private int damage;
     private Difficulty difficulty; // do kho
     private Characters player; // dung de xac dinh vi tri player
+    private int speed; // so pixel ma positon thay doi trong moi frame
+    private TileMap tileMap;
 
     public Enemy() {
 
     }
 
     public Enemy(String name, Vector2 position, float rotation, Vector2 scale, Sprite sprite,
-                 AnimationController animationController, Difficulty difficulty, Characters player) {
+                 AnimationController animationController, Difficulty difficulty, Characters player,
+                 int speed, TileMap tileMap) {
         super(name, position, rotation, scale, sprite, animationController);
+        this.speed = speed;
+        this.tileMap = tileMap;
         this.player = player;
         this.difficulty = difficulty;
         if (difficulty == Difficulty.EASY){
-            this.spawnTime = 7;
             this.hp = 3;
             this.damage = 1;
         } else if (difficulty == Difficulty.MEDIUM){
-            this.spawnTime = 5;
             this.hp = 5;
             this.damage = 2;
         } else { // Difficulty.HARD
-            this.spawnTime = 3;
             this.hp = 7;
             this.damage = 3;
         }
@@ -50,20 +53,24 @@ public class Enemy extends GameObject {
         direction = newDirection;
         switch (direction){
             case UP:
-                velocity = new Vector2(0, 1);
+                velocity = new Vector2(0, this.speed);
                 animName = "move_up";
                 break;
             case RIGHT:
-                velocity = new Vector2(1, 0);
+                velocity = new Vector2(this.speed, 0);
                 animName = "move_right";
                 break;
             case DOWN:
-                velocity = new Vector2(0, -1);
+                velocity = new Vector2(0, -this.speed);
                 animName = "move_down";
                 break;
             case LEFT:
-                velocity = new Vector2(-1, 0);
+                velocity = new Vector2(-this.speed, 0);
                 animName = "move_left";
+                break;
+            case IDLE:
+                velocity = new Vector2(0, 0);
+                animName = "idle";
                 break;
         }
         animationController.play(animName);
@@ -75,8 +82,10 @@ public class Enemy extends GameObject {
         if (nextMove != this.direction){
             move(nextMove);
         }
-        position.x += velocity.x;
-        position.y += velocity.y;
+        if (!tileMap.hitAWall(this.position.x + velocity.x, this.position.y + velocity.y, 15, 6)) {
+            position.x += velocity.x;
+            position.y += velocity.y;
+        }
     }
 
     @Override
@@ -90,38 +99,64 @@ public class Enemy extends GameObject {
 
     private Direction nextMove() {
         if (difficulty == Difficulty.EASY) {
+            // che do EASY, bot di chuyen ngau nhien
             // trung binh 1 s doi huong 1 lan:
             Random rd = new Random();
-            int rand_int = rd.nextInt(60);
-            if (rand_int == 1) {
+            int rand_int = rd.nextInt(15);
+            if (rand_int == 0) {
                 return Direction.getRandom();
             }
             return this.direction;
         } else if(difficulty == Difficulty.MEDIUM) {
-            Direction next = Direction.RIGHT;
-            float min = manhattan_dist(this.position.x + 1, this.position.y);
-            if (manhattan_dist(this.position.x - 1, this.position.y) < min){
-                min = manhattan_dist(this.position.x - 1, this.position.y);
+            // che do MEDIUM, khi nap sau tuong bot se khong thay
+            // heuristic A* dung khoang cach manhattan
+            Direction next = Direction.IDLE;
+            float min = Integer.MAX_VALUE;
+            if (manhattan_dist(this.position.x + this.speed, this.position.y) < min &&
+                    !tileMap.hitAWall(this.position.x + this.speed, this.position.y, 15, 6)){
+                min = manhattan_dist(this.position.x + this.speed, this.position.y);
+                next = Direction.RIGHT;
+            }
+            if (manhattan_dist(this.position.x - this.speed, this.position.y) < min &&
+                    !tileMap.hitAWall(this.position.x - this.speed, this.position.y, 15, 6)){
+                min = manhattan_dist(this.position.x - this.speed, this.position.y);
                 next = Direction.LEFT;
-            } else if (manhattan_dist(this.position.x, this.position.y + 1) < min){
-                min = manhattan_dist(this.position.x, this.position.y + 1);
+            }
+            if (manhattan_dist(this.position.x, this.position.y + this.speed) < min &&
+                    !tileMap.hitAWall(this.position.x, this.position.y + this.speed, 15, 6)){
+                min = manhattan_dist(this.position.x, this.position.y + this.speed);
                 next = Direction.UP;
-            } else if (manhattan_dist(this.position.x, this.position.y - 1) < min) { // LEFT
-                min = manhattan_dist(this.position.x, this.position.y - 1);
+            }
+            if (manhattan_dist(this.position.x, this.position.y - this.speed) < min &&
+                    !tileMap.hitAWall(this.position.x, this.position.y - this.speed, 15, 6)){
+                min = manhattan_dist(this.position.x, this.position.y - this.speed);
                 next = Direction.DOWN;
             }
             return next;
         } else { // Difficulty.HARD
-            Direction next = Direction.RIGHT;
-            float min = bfs_dist(this.position.x + 1, this.position.y);
-            if (bfs_dist(this.position.x - 1, this.position.y) < min){
-                min = bfs_dist(this.position.x - 1, this.position.y);
+            // che do HARD, bot luon tim duoc duong di ngan nhat toi nguoi choi
+            // heuristic A* dung khoang cach ngan nhat (duyet BFS)
+            // (ma BFS phai duyet qua nhieu lan nen khong kha thi)
+            Direction next = Direction.IDLE;
+            float min = Integer.MAX_VALUE;
+            if (bfs_dist(this.position.x + this.speed, this.position.y) < min &&
+                    !tileMap.hitAWall(this.position.x + this.speed, this.position.y, 15, 6)){
+                min = bfs_dist(this.position.x + this.speed, this.position.y);
+                next = Direction.RIGHT;
+            }
+            if (bfs_dist(this.position.x - this.speed, this.position.y) < min &&
+                    !tileMap.hitAWall(this.position.x - this.speed, this.position.y, 15, 6)){
+                min = bfs_dist(this.position.x - this.speed, this.position.y);
                 next = Direction.LEFT;
-            } else if (bfs_dist(this.position.x, this.position.y + 1) < min){
-                min = bfs_dist(this.position.x, this.position.y + 1);
+            }
+            if (bfs_dist(this.position.x, this.position.y + this.speed) < min &&
+                    !tileMap.hitAWall(this.position.x, this.position.y + this.speed, 15, 6)){
+                min = bfs_dist(this.position.x, this.position.y + this.speed);
                 next = Direction.UP;
-            } else if (bfs_dist(this.position.x, this.position.y - 1) < min) { // LEFT
-                min = bfs_dist(this.position.x, this.position.y - 1);
+            }
+            if (bfs_dist(this.position.x, this.position.y - this.speed) < min &&
+                    !tileMap.hitAWall(this.position.x, this.position.y - this.speed, 15, 6)){
+                min = bfs_dist(this.position.x, this.position.y - this.speed);
                 next = Direction.DOWN;
             }
             return next;
@@ -135,7 +170,6 @@ public class Enemy extends GameObject {
 
     private float bfs_dist(float x, float y){
         // khoang cach nho nhat tu (x, y) toi player (dung bfs)
-        // se them vao sau khi xu ly va cham voi tuong
         return manhattan_dist(x, y);
     }
 

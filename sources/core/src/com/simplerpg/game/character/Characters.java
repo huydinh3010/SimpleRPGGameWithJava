@@ -4,19 +4,24 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.simplerpg.game.GameObject;
+import com.simplerpg.game.tilemap.TileMap;
 import com.simplerpg.game.animation.AnimationController;
 
 public class Characters extends GameObject {
     private Direction direction = Direction.DOWN;
     private Vector2 velocity = new Vector2(0, 0);
+    private int speed;
+    TileMap tileMap;
 
     public Characters() {
 
     }
 
     public Characters(String name, Vector2 position, float rotation, Vector2 scale, Sprite sprite,
-                      AnimationController animationController) {
+                      AnimationController animationController, int speed, TileMap tileMap) {
         super(name, position, rotation, scale, sprite, animationController);
+        this.speed = speed;
+        this.tileMap = tileMap;
     }
 
 
@@ -49,19 +54,19 @@ public class Characters extends GameObject {
         direction = newDirection;
         switch (direction){
             case UP:
-                velocity = new Vector2(0, 3);
+                velocity = new Vector2(0, this.speed);
                 animName = "move_up";
                 break;
             case RIGHT:
-                velocity = new Vector2(3, 0);
+                velocity = new Vector2(this.speed, 0);
                 animName = "move_right";
                 break;
             case DOWN:
-                velocity = new Vector2(0, -3);
+                velocity = new Vector2(0, -this.speed);
                 animName = "move_down";
                 break;
             case LEFT:
-                velocity = new Vector2(-3, 0);
+                velocity = new Vector2(-this.speed, 0);
                 animName = "move_left";
                 break;
         }
@@ -90,8 +95,10 @@ public class Characters extends GameObject {
 
     @Override
     public void update() {
-        position.x += velocity.x;
-        position.y += velocity.y;
+        if (!tileMap.hitAWall(this.position.x + velocity.x, this.position.y + velocity.y, 15, 6)) {
+            position.x += velocity.x;
+            position.y += velocity.y;
+        }
     }
 
     @Override

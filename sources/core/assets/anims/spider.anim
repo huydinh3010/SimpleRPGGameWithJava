@@ -1,4 +1,4 @@
-4
+5
 6 move_down true
 sprites/spider/spider_01.png
 sprites/spider/spider_02.png
@@ -22,5 +22,7 @@ sprites/spider/spider_09.png
 sprites/spider/spider_10.png
 sprites/spider/spider_03.png
 sprites/spider/spider_02.png
+sprites/spider/spider_09.png
+1 idle false
 sprites/spider/spider_09.png
 

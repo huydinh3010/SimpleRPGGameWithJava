@@ -8,7 +8,7 @@ import com.simplerpg.game.animation.AnimationController;
 import com.simplerpg.game.character.*;
 import com.simplerpg.game.tilemap.*;
 import org.omg.PortableInterceptor.INACTIVE;
-
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import java.io.IOException;
 
 public class SimpleRPG implements ApplicationListener, InputProcessor {
@@ -16,33 +16,35 @@ public class SimpleRPG implements ApplicationListener, InputProcessor {
 	TileMap tileMap = new TileMap();
 	Characters character;
 	Enemy spider;
+	FitViewport viewport; // viewport giup map vua voi man hinh
 
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		tileMap.loadMapFromArray(TileMap.test);
 		Gdx.input.setInputProcessor(this);
+		viewport = new FitViewport(tileMap.getMapWidth(), tileMap.getMapHeight());
 		try {
-			character = new Characters("pipyaka", new Vector2(0, 0), 0.0f, new Vector2(1,1), null,
-					new AnimationController("anims/player.anim"));
-			spider = new Enemy("Spider", new Vector2 (100, 100), 0.0f, new Vector2(1,1), null,
-					new AnimationController("anims/spider.anim"), Difficulty.MEDIUM, character);
+			character = new Characters("pipyaka", new Vector2(90, 90), 0.0f, new Vector2(1,1), null,
+					new AnimationController("anims/player.anim"), 3, tileMap);
+			spider = new Enemy("Spider", new Vector2 (150, 150), 0.0f, new Vector2(1,1), null,
+					new AnimationController("anims/spider.anim"), Difficulty.MEDIUM, character, 1, tileMap);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-
 	}
 
 	@Override
 	public void resize(int width, int height) {
-
+		viewport.update(width, height, true);
 	}
 
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		viewport.apply();
+		batch.setProjectionMatrix(viewport.getCamera().combined);
 		batch.begin();
 		tileMap.draw(batch);
 		character.update();
