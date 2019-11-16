@@ -23,6 +23,7 @@ public class SimpleRPG implements ApplicationListener, InputProcessor {
 		batch = new SpriteBatch();
 		tileMap.loadMapFromArray(TileMap.test);
 		Gdx.input.setInputProcessor(this);
+		// fit viewport voi tilemap
 		viewport = new FitViewport(tileMap.getMapWidth(), tileMap.getMapHeight());
 		try {
 			character = new Characters("pipyaka", new Vector2(90, 90), 0.0f, new Vector2(1,1), null,
