@@ -6,47 +6,26 @@ import com.badlogic.gdx.math.Vector2;
 import com.simplerpg.game.GameObject;
 import com.simplerpg.game.tilemap.TileMap;
 import com.simplerpg.game.animation.AnimationController;
+import com.simplerpg.game.character.Difficulty;
 
 public class Characters extends GameObject {
-    private Direction direction = Direction.DOWN;
-    private Vector2 velocity = new Vector2(0, 0);
-    private int speed;
+    Direction direction = Direction.DOWN;
+    Vector2 velocity = new Vector2(0, 0);
+    int speed;
     TileMap tileMap;
+    int hp;
+    int damage;
+    Difficulty difficulty; // do kho
 
     public Characters() {
 
     }
 
     public Characters(String name, Vector2 position, float rotation, Vector2 scale, Sprite sprite,
-                      AnimationController animationController, int speed, TileMap tileMap) {
+                      AnimationController animationController, TileMap tileMap, Difficulty difficulty) {
         super(name, position, rotation, scale, sprite, animationController);
-        this.speed = speed;
         this.tileMap = tileMap;
-    }
-
-
-
-    public void rotate(int degree){
-        String animName = "";
-        switch (direction){
-            case UP:
-                direction = degree >= 0 ? Direction.RIGHT : Direction.LEFT;
-                animName = degree >= 0 ? "rotate_up_to_right" : "rotate_up_to_left";
-                break;
-            case DOWN:
-                direction = degree >= 0 ? Direction.LEFT : Direction.RIGHT;
-                animName = degree >= 0 ? "rotate_down_to_left" : "rotate_down_to_right";
-                break;
-            case LEFT:
-                direction = degree >= 0 ? Direction.UP : Direction.DOWN;
-                animName = degree >= 0 ? "rotate_left_to_up" : "rotate_left_to_down";
-                break;
-            case RIGHT:
-                direction = degree >= 0 ? Direction.DOWN : Direction.UP;
-                animName = degree >= 0 ? "rotate_right_to_down" : "rotate_right_to_up";
-                break;
-        }
-        animationController.play(animName);
+        this.difficulty = difficulty;
     }
 
     public void move(Direction newDirection){
@@ -68,6 +47,10 @@ public class Characters extends GameObject {
             case LEFT:
                 velocity = new Vector2(-this.speed, 0);
                 animName = "move_left";
+                break;
+            case IDLE:
+                velocity = new Vector2(0, 0);
+                animName = "idle";
                 break;
         }
         animationController.play(animName);

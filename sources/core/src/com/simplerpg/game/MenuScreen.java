@@ -16,6 +16,7 @@ public class MenuScreen implements Screen {
 
     private SimpleRPGGame parent;
     private Stage stage;
+    private boolean showResume;
 
     public MenuScreen(SimpleRPGGame game) {
         parent = game;
@@ -25,6 +26,11 @@ public class MenuScreen implements Screen {
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
     }
+
+    public void setShowResume(boolean isShow) {
+        showResume = isShow;
+    }
+
     /**
      * Called when this screen becomes the current screen for a {@link Game}.
      */
@@ -37,6 +43,18 @@ public class MenuScreen implements Screen {
         stage.addActor(table);
 
         Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
+
+        if (showResume) {
+            TextButton resume = new TextButton("Resume", skin);
+            table.add(resume);
+            table.row().pad(10, 0, 10, 0);
+            resume.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    Gdx.app.exit();
+                }
+            });
+        }
 
         TextButton newGame = new TextButton("New Game", skin);
         TextButton introduction = new TextButton("Introduction", skin);

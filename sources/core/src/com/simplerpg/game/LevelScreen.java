@@ -54,6 +54,20 @@ public class LevelScreen implements Screen {
                 parent.changeScreen(SimpleRPGGame.MENU);
             }
         });
+
+        easy.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                parent.changeScreen(SimpleRPGGame.GAME_EASY);
+            }
+        });
+
+        hard.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                parent.changeScreen(SimpleRPGGame.GAME_HARD);
+            }
+        });
     }
 
     /**
