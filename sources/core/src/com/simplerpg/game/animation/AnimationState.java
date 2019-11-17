@@ -28,7 +28,7 @@ public class AnimationState {
         this.sprites = sprites;
         this.speed = speed;
         this.loop = loop;
-        animation = new Animation(speed, sprites);
+        this.animation = new Animation(speed, sprites);
 
     }
 

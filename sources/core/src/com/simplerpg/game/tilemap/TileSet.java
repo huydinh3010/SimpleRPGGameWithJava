@@ -16,94 +16,38 @@ public class TileSet {
     }
 
     public TileSet(ItemTileSetType itemType){
-        texture = TileSet.getTextureFromType(itemType);
-        spriteHeight = TileSet.getSpriteHeightFromType(itemType);
-        spriteWidth = TileSet.getSpriteWidthFromType(itemType);
-        sprite = new Sprite(texture, spriteWidth, spriteHeight);
-    }
-
-    public static Texture getTextureFromType(ItemTileSetType type){
-        Texture texture = null;
-        switch (type){
+        switch (itemType){
             case TREE:
                 texture = new Texture("tilesets/tree_dummy.png");
+                sprite = new Sprite(texture, 0, 0, 105, 89);
+                // (0, 0) la vi tri cua tile trong file tree_dummy.org
+                // (105, 89) la chieu dai, chieu rong cua tile.
                 break;
             case WALL:
                 texture = new Texture("tilesets/walls.png");
+                sprite = new Sprite(texture, 9, 15, 28, 28);
                 break;
             case RIDGE:
                 texture = new Texture("tilesets/ridge.png");
+                sprite = new Sprite(texture, 71, 8, 69, 57);
                 break;
             case GROUND:
                 texture = new Texture("tilesets/ground.png");
+                sprite = new Sprite(texture, 0, 0, 30, 30);
                 break;
             case CACTUSES:
                 texture = new Texture("tilesets/cactuses.png");
+                sprite = new Sprite(texture, 3, 1, 38, 38);
                 break;
             case BUSH_BANANA:
                 texture = new Texture("tilesets/bushes_bananas.png");
+                sprite = new Sprite(texture, 5, 3, 54, 56);
                 break;
             case GROUND_GRASS:
                 texture = new Texture("tilesets/ground_grass.png");
+                sprite = new Sprite(texture, 0, 0, 30, 30);
                 break;
         }
-        return texture;
-    }
-
-    public static int getSpriteWidthFromType(ItemTileSetType type){
-        int width = 0;
-        switch (type){
-            case TREE:
-                width = 105;
-                break;
-            case WALL:
-                width = 45;
-                break;
-            case RIDGE:
-                width = 70;
-                break;
-            case GROUND:
-                width = 30;
-                break;
-            case CACTUSES:
-                width = 50;
-                break;
-            case BUSH_BANANA:
-                width = 60;
-                break;
-            case GROUND_GRASS:
-                width = 30;
-                break;
-        }
-        return width;
-    }
-
-    public static int getSpriteHeightFromType(ItemTileSetType type){
-        int height = 0;
-        switch (type){
-            case TREE:
-                height = 89;
-                break;
-            case WALL:
-                height = 45;
-                break;
-            case RIDGE:
-                height = 70;
-                break;
-            case GROUND:
-                height = 30;
-                break;
-            case CACTUSES:
-                height = 50;
-                break;
-            case BUSH_BANANA:
-                height = 60;
-                break;
-            case GROUND_GRASS:
-                height = 30;
-                break;
-        }
-        return height;
     }
 
     public Texture getTexture() {
