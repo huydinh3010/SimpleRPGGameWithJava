@@ -1,6 +1,5 @@
 package com.simplerpg.game;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -12,12 +11,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-public class MenuScreen implements Screen {
-
+public class PauseScreen implements Screen {
     private SimpleRPGGame parent;
     private Stage stage;
 
-    public MenuScreen(SimpleRPGGame game) {
+    public PauseScreen(SimpleRPGGame game) {
         parent = game;
 
         stage = new Stage(new ScreenViewport());
@@ -25,6 +23,7 @@ public class MenuScreen implements Screen {
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
     }
+
 
     /**
      * Called when this screen becomes the current screen for a {@link Game}.
@@ -39,13 +38,13 @@ public class MenuScreen implements Screen {
 
         Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
 
-        TextButton newGame = new TextButton("New Game", skin);
-        TextButton introduction = new TextButton("Introduction", skin);
+        TextButton resume = new TextButton("Resume", skin);
+        TextButton menu = new TextButton("Menu", skin);
         TextButton exit = new TextButton("Exit", skin);
 
-        table.add(newGame);
+        table.add(resume);
         table.row().pad(10, 0, 10, 0);
-        table.add(introduction).fillX().uniform();
+        table.add(menu).fillX().uniform();
         table.row();
         table.add(exit).fillX().uniform();
 
@@ -58,10 +57,17 @@ public class MenuScreen implements Screen {
             }
         });
 
-        newGame.addListener(new ChangeListener() {
+        resume.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                parent.changeScreen(SimpleRPGGame.LEVEL);
+                parent.changeScreen(SimpleRPGGame.RESUME);
+            }
+        });
+
+        menu.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                parent.changeScreen(SimpleRPGGame.MENU);
             }
         });
     }
@@ -79,12 +85,10 @@ public class MenuScreen implements Screen {
         stage.draw();
     }
 
-
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
     }
-
 
     @Override
     public void pause() {
@@ -96,17 +100,11 @@ public class MenuScreen implements Screen {
 
     }
 
-    /**
-     * Called when this screen is no longer the current screen for a {@link Game}.
-     */
     @Override
     public void hide() {
 
     }
 
-    /**
-     * Called when this screen should release all resources.
-     */
     @Override
     public void dispose() {
         stage.dispose();
