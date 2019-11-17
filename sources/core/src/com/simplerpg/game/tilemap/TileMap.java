@@ -10,6 +10,7 @@ public class TileMap {
     // kich thuoc map theo pixels
     private int mapWidth;
     private int mapHeight;
+    private Sprite ground = new TileSet(ItemTileSetType.GROUND).getSprite(); // nen cua tile map
 
     public static final int[][] test = {
             {6,6,6,6,6,6,6,6,6,6},
@@ -59,7 +60,6 @@ public class TileMap {
     }
 
     public void draw(SpriteBatch batch){
-        Sprite ground = new TileSet(ItemTileSetType.GROUND).getSprite();
         for(int i = 0; i < items.length; i++){
             for (int j = 0; j < items[0].length; j++){
                 // luon ve GROUND truoc o duoi moi tile
