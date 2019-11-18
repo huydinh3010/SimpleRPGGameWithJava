@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.simplerpg.game.animation.AnimationController;
+import com.simplerpg.game.collision.Collider;
 
 public abstract class GameObject {
     protected String name;
@@ -12,7 +13,7 @@ public abstract class GameObject {
     protected Vector2 scale;
     protected Sprite sprite;
     protected AnimationController animationController;
-
+    protected Collider collider;
     public GameObject(){
 
     }
