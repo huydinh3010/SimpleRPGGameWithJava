@@ -7,12 +7,12 @@ import com.simplerpg.game.character.Difficulty;
 public class SimpleRPGGame extends Game {
 
     private LoadingScreen loadingScreen;
-    private GameScreen mainScreenEasy;
-    private GameScreen mainScreenHard;
+    private GameScreen mainScreen;
     private MenuScreen menuScreen;
     private EndScreen endScreen;
     private IntroductionScreen introductionScreen;
     private LevelScreen levelScreen;
+    private PauseScreen pauseScreen;
 
     public final static int MENU = 0;
     public final static int INTRODUCTION = 1;
@@ -20,7 +20,8 @@ public class SimpleRPGGame extends Game {
     public final static int GAME_HARD = 5;
     public final static int ENDGAME = 3;
     public final static int LEVEL = 4;
-
+    public final static int RESUME = 6;
+    public final static int PAUSE = 7;
     /**
      * Called when the {@link Application} is first created.
      */
@@ -45,16 +46,12 @@ public class SimpleRPGGame extends Game {
                 this.setScreen(introductionScreen);
                 break;
             case GAME_EASY:
-                if (mainScreenEasy == null) {
-                    mainScreenEasy = new GameScreen(this, Difficulty.EASY);
-                }
-                this.setScreen(mainScreenEasy);
+                mainScreen = new GameScreen(this, Difficulty.EASY);
+                this.setScreen(mainScreen);
                 break;
             case GAME_HARD:
-                if (mainScreenHard == null) {
-                    mainScreenHard = new GameScreen(this, Difficulty.MEDIUM);
-                }
-                this.setScreen(mainScreenHard);
+                mainScreen = new GameScreen(this, Difficulty.MEDIUM);
+                this.setScreen(mainScreen);
                 break;
             case ENDGAME:
                 if (endScreen == null) {
@@ -67,6 +64,15 @@ public class SimpleRPGGame extends Game {
                     levelScreen = new LevelScreen(this);
                 }
                 this.setScreen(levelScreen);
+                break;
+            case RESUME:
+                this.setScreen(mainScreen);
+                break;
+            case PAUSE:
+                if (pauseScreen == null) {
+                    pauseScreen = new PauseScreen(this);
+                }
+                this.setScreen(pauseScreen);
                 break;
         }
     }

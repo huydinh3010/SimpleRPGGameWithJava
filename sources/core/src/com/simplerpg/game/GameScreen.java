@@ -20,7 +20,7 @@ public class GameScreen implements Screen, InputProcessor {
 	Enemy spider;
 	FitViewport viewport; // viewport giup map vua voi man hinh
 	Difficulty difficulty;
-
+	boolean isPause = false;
 	private SimpleRPGGame parent;
 	private Stage stage;
 
@@ -50,9 +50,8 @@ public class GameScreen implements Screen, InputProcessor {
 	 */
 	@Override
 	public void show() {
-
+		isPause = false;
 		Gdx.input.setInputProcessor(this);
-
 	}
 
 	/**
@@ -62,6 +61,9 @@ public class GameScreen implements Screen, InputProcessor {
 	 */
 	@Override
 	public void render(float delta) {
+		if(isPause == true){
+			return;
+		}
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		viewport.apply();
@@ -122,7 +124,8 @@ public class GameScreen implements Screen, InputProcessor {
 			return true;
 		}
 		else if (keycode == Input.Keys.ESCAPE) {
-			parent.changeScreen(SimpleRPGGame.MENU);
+			isPause = true;
+			parent.changeScreen(SimpleRPGGame.PAUSE);
 			return true;
 		}
 		else {
