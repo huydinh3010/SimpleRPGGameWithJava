@@ -13,37 +13,31 @@ public class TileMap {
     private Sprite ground = new TileSet(ItemTileSetType.GROUND_GRASS).getSprite(); // nen cua tile map
 
     public static final int[][] test = {
-            {2,2,2,6,6,6,6,6,6,6,6,6,6,6,6,6},
-            {2,2,2,6,2,6,0,0,0,2,2,2,2,4,2,6},
-            {6,2,2,2,2,6,0,0,2,2,2,2,2,4,2,6},
-            {6,6,6,2,2,6,2,2,2,2,1,2,2,4,2,6},
-            {6,2,2,2,2,6,2,2,2,2,1,2,2,4,2,6},
-            {6,2,4,4,4,2,2,2,6,6,1,6,2,4,2,6},
-            {6,2,4,2,2,2,2,2,2,6,2,6,2,2,2,6},
-            {6,2,4,2,2,2,2,2,2,6,2,6,2,2,2,6},
-            {6,2,6,6,6,6,2,2,2,6,2,6,2,6,2,6},
-            {6,2,6,2,2,2,2,2,2,6,2,2,2,6,2,6},
-            {6,2,2,2,6,6,6,6,6,6,2,6,6,6,2,6},
-            {6,6,6,6,6,2,4,4,2,2,2,6,2,2,2,6},
-            {6,2,2,2,2,2,4,2,2,2,2,6,2,2,2,6},
-            {6,2,2,2,2,2,4,2,2,2,2,6,2,2,0,6},
-            {6,2,2,2,2,2,2,2,2,2,5,5,6,2,2,6},
-            {6,0,6,6,0,0,2,4,5,2,5,5,5,6,6,6},
-            {6,5,5,0,2,2,2,4,2,2,2,2,2,2,2,6},
-            {6,5,2,0,2,2,2,4,2,2,2,2,1,5,2,6},
-            {6,2,2,5,2,2,2,4,2,2,1,1,1,5,2,6},
-            {6,2,2,5,2,2,2,4,2,2,2,2,1,5,2,6},
-            {6,2,2,5,2,2,2,6,2,2,2,2,1,2,2,6},
-            {6,2,2,2,2,2,2,6,2,2,2,2,1,2,2,6},
-            {6,2,2,2,2,6,6,6,6,6,6,2,2,2,2,6},
-            {6,2,2,6,2,2,2,6,0,6,2,2,2,2,2,6},
-            {6,2,2,6,2,2,2,6,2,6,2,2,2,2,2,6},
-            {6,2,2,6,6,6,2,2,2,6,2,6,6,6,6,6},
-            {6,2,2,2,6,1,2,2,2,6,2,2,2,4,6,2},
-            {6,1,2,2,6,1,2,2,2,6,2,4,2,2,6,2},
-            {6,1,2,2,6,6,1,6,6,6,2,4,6,6,6,2},
-            {6,1,1,2,2,2,1,5,5,2,2,2,2,2,2,2},
-            {6,6,6,6,6,6,6,6,6,6,6,6,6,6,2,2}
+            {6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6},
+            {6,2,2,2,2,2,1,5,1,1,1,1,17,16,16,6},
+            {6,2,2,2,2,2,1,1,1,9,7,8,1,18,18,6},
+            {6,2,2,2,0,1,1,1,1,3,6,6,4,1,10,6},
+            {6,2,2,2,2,2,20,19,1,1,1,3,1,12,12,6},
+            {6,2,2,2,2,2,6,6,2,2,1,14,1,12,12,6},
+            {6,2,2,2,2,2,2,2,2,2,2,1,1,1,1,6},
+            {6,2,2,2,2,2,2,2,2,2,2,2,2,2,2,6},
+            {6,2,2,2,2,2,2,2,2,2,2,2,2,2,2,6},
+            {6,2,2,2,2,2,2,2,2,2,2,2,2,2,2,6},
+            {6,2,2,2,2,2,2,2,2,2,2,2,2,2,2,6},
+            {6,2,2,2,2,2,2,2,2,2,2,2,15,15,15,6},
+            {6,2,2,2,2,2,2,2,2,2,2,2,15,15,13,6},
+            {6,2,2,2,2,2,2,2,2,2,2,2,2,2,2,6},
+            {6,2,2,2,2,2,2,2,2,2,2,2,2,2,2,6},
+            {6,2,2,2,2,2,2,2,2,2,2,2,2,2,2,6},
+            {6,2,2,2,2,2,2,2,2,2,2,2,2,2,2,6},
+            {6,2,2,2,2,2,2,2,2,2,2,2,2,2,2,6},
+            {6,1,2,2,2,2,2,2,2,2,2,2,2,2,2,6},
+            {6,11,1,2,2,2,2,2,2,2,2,2,2,2,2,6},
+            {6,11,11,1,2,2,2,2,2,2,2,2,2,2,2,6},
+            {6,11,11,1,2,2,2,2,2,2,2,2,2,2,2,6},
+            {6,11,11,11,21,22,2,2,2,2,2,2,2,2,2,6},
+            {6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6}
+
     };
 
     public void loadMapFromFile(String mapFile){
@@ -54,13 +48,56 @@ public class TileMap {
         this.mapArray = items;
         ItemTileSetType[][] itemTypes = new ItemTileSetType[items.length][items[0].length];
         ItemTileSetType[] mapping = {
-                ItemTileSetType.BUSH_BANANA,
-                ItemTileSetType.CACTUSES,
-                ItemTileSetType.GROUND,
+                ItemTileSetType.GATE,
                 ItemTileSetType.GROUND_GRASS,
+                ItemTileSetType.GROUND,
+                ItemTileSetType.WALL_1,
+                ItemTileSetType.WALL_2,
+                ItemTileSetType.WALL_3,
+                ItemTileSetType.WALL_4,
+                ItemTileSetType.WALL_5,
+                ItemTileSetType.WALL_6,
+                ItemTileSetType.WALL_7,
+                ItemTileSetType.TREE_DUMMY,
+                ItemTileSetType.TREE_CROWNS_1,
+                ItemTileSetType.TREE_CROWNS_2,
+                ItemTileSetType.TREE_CROWNS_3,
+                ItemTileSetType.TREE_1,
+                ItemTileSetType.TREE_2,
+                ItemTileSetType.TREE_3,
+                ItemTileSetType.TREE_4,
+                ItemTileSetType.TREE_5,
+                ItemTileSetType.TREE_STUBS_1,
+                ItemTileSetType.TREE_STUBS_2,
+                ItemTileSetType.TREE_STUBS_3,
+                ItemTileSetType.TREE_STUBS_4,
+                ItemTileSetType.BUSHES_BANANAS,
+                ItemTileSetType.BUSHES_BANANAS_2,
+                ItemTileSetType.BUSHES_BANANAS_3,
+                ItemTileSetType.BUSHES_BIG_1,
+                ItemTileSetType.BUSHES_BIG_2,
+                ItemTileSetType.BUSHES_BIG_3,
                 ItemTileSetType.RIDGE,
-                ItemTileSetType.TREE,
-                ItemTileSetType.WALL};
+                ItemTileSetType.RIDGE_2,
+                ItemTileSetType.RIDGE_3,
+                ItemTileSetType.HOUSE_BOTTOM,
+                ItemTileSetType.HOUSE_TOP,
+                ItemTileSetType.CACTUSES,
+                ItemTileSetType.CACTUSES_2,
+                ItemTileSetType.CACTUSES_3,
+                ItemTileSetType.CACTUSES_4,
+                ItemTileSetType.CACTUSES_BIG,
+                ItemTileSetType.WELL,
+                ItemTileSetType.WELL_BAIL,
+                ItemTileSetType.TELEGA_BRICKS_1,
+                ItemTileSetType.TELEGA_BRICKS_2,
+                ItemTileSetType.TELEGA_BRICKS_3,
+                ItemTileSetType.TELEGA_BRICKS_4,
+                ItemTileSetType.TRAILS,
+                ItemTileSetType.WOOD_WALLS_1,
+                ItemTileSetType.WOOD_WALLS_2,
+                ItemTileSetType.WOOD_WALLS_3,
+                ItemTileSetType.WOOD_WALLS_CRATERS};
         for(int i = 0; i < itemTypes.length; i++){
             for (int j = 0; j < itemTypes[0].length; j++){
                 itemTypes[i][j] = mapping[items[i][j]];
@@ -86,7 +123,7 @@ public class TileMap {
                 // luon ve GROUND truoc o duoi moi tile
                 ground.setPosition(i * cellSize, j * cellSize);
                 ground.draw(batch);
-                if (this.mapArray[i][j] != 3 ) { // neu khong phai GROUND moi can ve
+                if (this.mapArray[i][j] != 1 ) { // neu khong phai GROUND moi can ve
                     Sprite sprite = items[i][j].getSprite();
                     sprite.setPosition(i * cellSize, j * cellSize);
                     sprite.setSize(this.cellSize, this.cellSize);
