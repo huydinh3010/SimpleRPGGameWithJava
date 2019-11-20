@@ -113,111 +113,107 @@ public class TileSet {
                 break;
             case BUSHES_BANANAS:
                 texture = new Texture("tilesets/bushes_bananas.png");
-                sprite = new Sprite(texture, 5, 3, 54, 56);
+                sprite = new Sprite(texture, 5, 1, 54, 56);
                 break;
             case BUSHES_BANANAS_2:
                 texture = new Texture("tilesets/bushes_bananas_2.png");
-                sprite = new Sprite(texture, 5, 3, 54, 56);
+                sprite = new Sprite(texture, 0, 1, 54, 56);
                 break;
             case BUSHES_BANANAS_3:
                 texture = new Texture("tilesets/bushes_bananas_3.png");
-                sprite = new Sprite(texture, 5, 3, 54, 56);
+                sprite = new Sprite(texture, 0, 0, 54, 56);
                 break;
             case BUSHES_BIG_1:
                 texture = new Texture("tilesets/bushes_big_1.png");
-                sprite = new Sprite(texture, 0, 0, 105, 89);
+                sprite = new Sprite(texture, 0, 0, 46, 50);
                 break;
             case BUSHES_BIG_2:
                 texture = new Texture("tilesets/bushes_big_2.png");
-                sprite = new Sprite(texture, 0, 0, 105, 89);
+                sprite = new Sprite(texture, 0, 2, 45, 53);
                 break;
             case BUSHES_BIG_3:
                 texture = new Texture("tilesets/bushes_big_3.png");
-                sprite = new Sprite(texture, 0, 0, 105, 89);
+                sprite = new Sprite(texture, 0, 0, 45, 50);
                 break;
             case RIDGE:
                 texture = new Texture("tilesets/ridge.png");
-                sprite = new Sprite(texture, 71, 8, 69, 57);
+                sprite = new Sprite(texture, 70, 3, 69, 57);
                 break;
             case RIDGE_2:
                 texture = new Texture("tilesets/ridge_2.png");
-                sprite = new Sprite(texture, 0, 0, 105, 89);
+                sprite = new Sprite(texture, 0, 5, 55, 57);
                 break;
             case RIDGE_3:
                 texture = new Texture("tilesets/ridge_3.png");
-                sprite = new Sprite(texture, 9, 15, 28, 28);
+                sprite = new Sprite(texture, 0, 8, 69, 57);
                 break;
             case HOUSE_BOTTOM:
                 texture = new Texture("tilesets/house_bottom.png");
-                sprite = new Sprite(texture, 71, 8, 69, 57);
+                sprite = new Sprite(texture, 18, 30, 111, 112);
                 break;
             case HOUSE_TOP:
                 texture = new Texture("tilesets/house_top.png");
-                sprite = new Sprite(texture, 0, 0, 30, 30);
+                sprite = new Sprite(texture, 16, -1, 114, 112);
                 break;
             case CACTUSES:
                 texture = new Texture("tilesets/cactuses.png");
-                sprite = new Sprite(texture, 3, 1, 38, 38);
+                sprite = new Sprite(texture, 0, 4, 42, 36);
                 break;
             case CACTUSES_2:
                 texture = new Texture("tilesets/cactuses_2.png");
-                sprite = new Sprite(texture, 3, 1, 38, 38);
+                sprite = new Sprite(texture, 3, 3, 41, 41);
                 break;
             case CACTUSES_3:
                 texture = new Texture("tilesets/cactuses_3.png");
-                sprite = new Sprite(texture, 3, 1, 38, 38);
+                sprite = new Sprite(texture, 0, 3, 41, 44);
                 break;
             case CACTUSES_4:
                 texture = new Texture("tilesets/cactuses_4.png");
-                sprite = new Sprite(texture, 3, 1, 38, 38);
+                sprite = new Sprite(texture, 5, 4, 43, 36);
                 break;
             case CACTUSES_BIG:
                 texture = new Texture("tilesets/cactuses_big.png");
-                sprite = new Sprite(texture, 5, 3, 54, 56);
+                sprite = new Sprite(texture, 5, 7, 73, 65);
                 break;
             case WELL:
                 texture = new Texture("tilesets/well.png");
-                sprite = new Sprite(texture, 5, 3, 54, 56);
+                sprite = new Sprite(texture, 11, 0, 54, 56);
                 break;
             case WELL_BAIL:
                 texture = new Texture("tilesets/well_bail.png");
-                sprite = new Sprite(texture, 5, 3, 54, 56);
+                sprite = new Sprite(texture, 30, 0, 31, 30);
                 break;
             case TELEGA_BRICKS_1:
                 texture = new Texture("tilesets/telega_bricks_1.png");
-                sprite = new Sprite(texture, 5, 3, 54, 56);
+                sprite = new Sprite(texture, 0, 0, 51, 50);
                 break;
             case TELEGA_BRICKS_2:
                 texture = new Texture("tilesets/telega_bricks_2.png");
-                sprite = new Sprite(texture, 5, 3, 54, 56);
+                sprite = new Sprite(texture, 0, 0, 51, 50);
                 break;
             case TELEGA_BRICKS_3:
                 texture = new Texture("tilesets/telega_bricks_3.png");
-                sprite = new Sprite(texture, 5, 3, 54, 56);
+                sprite = new Sprite(texture, 0, 1, 51, 50);
                 break;
             case TELEGA_BRICKS_4:
                 texture = new Texture("tilesets/telega_bricks_4.png");
-                sprite = new Sprite(texture, 5, 3, 54, 56);
+                sprite = new Sprite(texture, 0, 0, 52, 50);
                 break;
             case TRAILS:
                 texture = new Texture("tilesets/trails.png");
-                sprite = new Sprite(texture, 5, 3, 54, 56);
+                sprite = new Sprite(texture, 25, 6, 38, 21);
                 break;
             case WOOD_WALLS_1:
                 texture = new Texture("tilesets/wood_walls_1.png");
-                sprite = new Sprite(texture, 5, 3, 54, 56);
+                sprite = new Sprite(texture, 0, 2, 43, 47);
                 break;
             case WOOD_WALLS_2:
                 texture = new Texture("tilesets/wood_walls_2.png");
-                sprite = new Sprite(texture, 5, 3, 54, 56);
+                sprite = new Sprite(texture, 0, 0, 41, 48);
                 break;
             case WOOD_WALLS_3:
                 texture = new Texture("tilesets/wood_walls_3.png");
-                sprite = new Sprite(texture, 5, 3, 54, 56);
-                break;
-            case WOOD_WALLS_CRATERS:
-                texture = new Texture("tilesets/wood_walls_craters.png");
-                sprite = new Sprite(texture, 0, 0, 30, 30);
+                sprite = new Sprite(texture, 2, 0, 42, 48);
                 break;
         }
     }

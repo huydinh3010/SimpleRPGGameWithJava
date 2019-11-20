@@ -49,6 +49,5 @@ public enum ItemTileSetType {
     TRAILS,//45
     WOOD_WALLS_1,//46
     WOOD_WALLS_2,//47
-    WOOD_WALLS_3,//48
-    WOOD_WALLS_CRATERS,//49
+    WOOD_WALLS_3//48
 }
