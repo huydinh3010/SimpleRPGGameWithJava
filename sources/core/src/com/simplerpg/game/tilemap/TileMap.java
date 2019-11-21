@@ -143,12 +143,12 @@ public class TileMap {
         int end_j = (int) ((end_y-reduceR) / this.cellSize);
         for (int i = start_i; i <= end_i; i++){
             for (int j = start_j; j <= end_j; j++){
-                if (this.mapArray[i][j] != 2){ // khong di duoc vao tile khac voi GROUND
-                    return true;
+                if (this.mapArray[i][j] == 2 || this.mapArray[i][j] == 0 || this.mapArray[i][j] == 1 || this.mapArray[i][j] == 45){ // khong di duoc vao tile khac voi GROUND
+                    return false;
                 }
             }
         }
-        return false;
+        return true;
     }
 
     public TileSet[][] getItems() {
