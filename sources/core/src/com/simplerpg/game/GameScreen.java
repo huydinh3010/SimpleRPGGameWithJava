@@ -30,6 +30,8 @@ public class GameScreen implements Screen, InputProcessor {
 		stage = new Stage(new ScreenViewport());
 		batch = new SpriteBatch();
 		tileMap.loadMapFromArray(TileMap.test);
+		Gdx.input.setInputProcessor(this);
+		// fit viewport voi tilemap
 		viewport = new FitViewport(tileMap.getMapWidth(), tileMap.getMapHeight());
 		try {
 			player = new Player("pipyaka", new Vector2(90, 90), 0.0f, new Vector2(1,1), null,

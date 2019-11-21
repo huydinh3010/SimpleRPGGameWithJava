@@ -33,23 +33,28 @@ public class Characters extends GameObject {
         direction = newDirection;
         switch (direction){
             case UP:
-                velocity = new Vector2(0, this.speed);
+                velocity.x = 0;
+                velocity.y = this.speed;
                 animName = "move_up";
                 break;
             case RIGHT:
-                velocity = new Vector2(this.speed, 0);
+                velocity.x = this.speed;
+                velocity.y = 0;
                 animName = "move_right";
                 break;
             case DOWN:
-                velocity = new Vector2(0, -this.speed);
+                velocity.x = 0;
+                velocity.y = -this.speed;
                 animName = "move_down";
                 break;
             case LEFT:
-                velocity = new Vector2(-this.speed, 0);
+                velocity.x = -this.speed;
+                velocity.y = 0;
                 animName = "move_left";
                 break;
             case IDLE:
-                velocity = new Vector2(0, 0);
+                velocity.x = 0;
+                velocity.y = 0;
                 animName = "idle";
                 break;
         }
@@ -72,7 +77,8 @@ public class Characters extends GameObject {
                 animName = "idle_left";
                 break;
         }
-        velocity = new Vector2(0,0);
+        velocity.x = 0;
+        velocity.y = 0;
         animationController.play(animName);
     }
 

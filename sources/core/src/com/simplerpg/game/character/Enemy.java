@@ -14,6 +14,7 @@ import static java.lang.Math.abs;
 public class Enemy extends Characters {
     public static final String TAG = Enemy.class.getName();
     private Player player; // dung de xac dinh vi tri player
+    private Random rd = new Random();
 
     public Enemy() {
 
@@ -54,7 +55,6 @@ public class Enemy extends Characters {
         if (difficulty == Difficulty.EASY) {
             // che do EASY, bot di chuyen ngau nhien
             // trung binh 1 s doi huong 1 lan:
-            Random rd = new Random();
             int rand_int = rd.nextInt(15);
             if (rand_int == 0) {
                 return Direction.getRandom();
