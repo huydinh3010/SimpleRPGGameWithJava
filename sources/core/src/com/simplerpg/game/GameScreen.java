@@ -24,12 +24,12 @@ public class GameScreen implements Screen, InputProcessor {
 	private SimpleRPGGame parent;
 	private Stage stage;
 
-	public GameScreen(SimpleRPGGame game, Difficulty difficulty){
+	public GameScreen(SimpleRPGGame game, Difficulty difficulty, int[][] map){
 		parent = game;
 		this.difficulty = difficulty;
 		stage = new Stage(new ScreenViewport());
 		batch = new SpriteBatch();
-		tileMap.loadMapFromArray(TileMap.test);
+		tileMap.loadMapFromArray(map);
 		Gdx.input.setInputProcessor(this);
 		// fit viewport voi tilemap
 		viewport = new FitViewport(tileMap.getMapWidth(), tileMap.getMapHeight());
@@ -64,6 +64,9 @@ public class GameScreen implements Screen, InputProcessor {
 		if(isPause == true){
 			return;
 		}
+		if(player.isChangeMap){
+		    parent.changeMap();
+        }
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		viewport.apply();

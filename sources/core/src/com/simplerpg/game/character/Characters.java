@@ -88,6 +88,7 @@ public class Characters extends GameObject {
             position.x += velocity.x;
             position.y += velocity.y;
         }
+
     }
 
     @Override

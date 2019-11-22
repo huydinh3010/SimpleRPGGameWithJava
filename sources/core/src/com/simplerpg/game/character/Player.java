@@ -7,6 +7,7 @@ import com.simplerpg.game.tilemap.TileMap;
 import com.simplerpg.game.character.Difficulty;
 
 public class Player extends Characters {
+    public boolean isChangeMap = false;
     public Player(String name, Vector2 position, float rotation, Vector2 scale, Sprite sprite,
                   AnimationController animationController, TileMap tileMap, Difficulty difficulty) {
         super(name, position, rotation, scale, sprite, animationController, tileMap, difficulty);
@@ -22,6 +23,13 @@ public class Player extends Characters {
             this.hp = 15;
             this.damage = 1;
             this.speed = 4;
+        }
+    }
+    @Override
+    public void update() {
+        super.update();
+        if(tileMap.checkChangeMap(this.position.x + velocity.x, this.position.y + velocity.y, 15, 6)){
+            isChangeMap = true;
         }
     }
 }

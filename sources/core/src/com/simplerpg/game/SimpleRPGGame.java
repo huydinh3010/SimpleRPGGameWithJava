@@ -3,6 +3,7 @@ package com.simplerpg.game;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.simplerpg.game.character.Difficulty;
+import com.simplerpg.game.tilemap.TileMap;
 
 public class SimpleRPGGame extends Game {
 
@@ -13,6 +14,8 @@ public class SimpleRPGGame extends Game {
     private IntroductionScreen introductionScreen;
     private LevelScreen levelScreen;
     private PauseScreen pauseScreen;
+    private Difficulty currentLevel;
+    private int currentMap = 0;
 
     public final static int MENU = 0;
     public final static int INTRODUCTION = 1;
@@ -31,7 +34,7 @@ public class SimpleRPGGame extends Game {
         setScreen(loadingScreen);
     }
 
-    public  void changeScreen(int screen) {
+    public void changeScreen(int screen) {
         switch (screen) {
             case MENU:
                 if (menuScreen == null) {
@@ -46,12 +49,12 @@ public class SimpleRPGGame extends Game {
                 this.setScreen(introductionScreen);
                 break;
             case GAME_EASY:
-                mainScreen = new GameScreen(this, Difficulty.EASY);
-                this.setScreen(mainScreen);
+                currentLevel = Difficulty.EASY;
+                changeMap();
                 break;
             case GAME_HARD:
-                mainScreen = new GameScreen(this, Difficulty.MEDIUM);
-                this.setScreen(mainScreen);
+                currentLevel = Difficulty.MEDIUM;
+                changeMap();
                 break;
             case ENDGAME:
                 if (endScreen == null) {
@@ -77,4 +80,21 @@ public class SimpleRPGGame extends Game {
         }
     }
 
+    public void changeMap (){
+        if(currentMap == 2){
+            changeScreen(MENU);
+            currentMap = 0;
+            return;
+        }
+
+        if(currentMap == 0){
+            mainScreen = new GameScreen(this, currentLevel, TileMap.map1);
+        }
+        if(currentMap == 1) {
+            mainScreen = new GameScreen(this, currentLevel, TileMap.map2);
+        }
+
+        this.setScreen(mainScreen);
+        currentMap++;
+    }
 }
