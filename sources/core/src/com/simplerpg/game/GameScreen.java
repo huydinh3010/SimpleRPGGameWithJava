@@ -12,20 +12,29 @@ import com.simplerpg.game.character.Difficulty;
 import com.simplerpg.game.tilemap.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class GameScreen implements Screen, InputProcessor {
 	SpriteBatch batch;
 	TileMap tileMap = new TileMap();
 	Player player;
-	Enemy spider;
 	FitViewport viewport; // viewport giup map vua voi man hinh
 	Difficulty difficulty;
 	boolean isPause = false;
 	private SimpleRPGGame parent;
 	private Stage stage;
 
+	ArrayList<Bullet> bullets;
+	ArrayList<Enemy> enemies;
+
+	float countDownNewEnemy = 1;
+	int   maxEnemy 			= 10;
+	int countEnemy 			= 0;
+
 	public GameScreen(SimpleRPGGame game, Difficulty difficulty, int[][] map){
 		parent = game;
+		bullets = new ArrayList<Bullet>();
+		enemies = new ArrayList<Enemy>();
 		this.difficulty = difficulty;
 		stage = new Stage(new ScreenViewport());
 		batch = new SpriteBatch();
@@ -36,13 +45,19 @@ public class GameScreen implements Screen, InputProcessor {
 		try {
 			player = new Player("pipyaka", new Vector2(90, 90), 0.0f, new Vector2(1,1), null,
 					new AnimationController("anims/player.anim"), tileMap, difficulty);
-			spider = new Enemy("Spider", new Vector2 (150, 150), 0.0f, new Vector2(1,1), null,
-					new AnimationController("anims/spider.anim"), difficulty, player, tileMap);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 		stage.draw();
+	}
+
+	public int getScreenWidth() {
+		return viewport.getScreenWidth();
+	}
+
+	public int getScreenHeight() {
+		return viewport.getScreenHeight();
 	}
 
 	/**
@@ -61,22 +76,92 @@ public class GameScreen implements Screen, InputProcessor {
 	 */
 	@Override
 	public void render(float delta) {
+
 		if(isPause == true){
 			return;
 		}
 		if(player.isChangeMap){
-		    parent.changeMap();
-        }
+			parent.changeMap();
+		}
+
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		viewport.apply();
 		batch.setProjectionMatrix(viewport.getCamera().combined);
 		batch.begin();
 		tileMap.draw(batch);
-		player.update();
-		spider.update();
-		player.draw(batch);
-		spider.draw(batch);
+
+		countDownNewEnemy -= delta;
+		if (countDownNewEnemy <= 0 && countEnemy < maxEnemy) {
+			countDownNewEnemy = 5;
+			try {
+				Enemy spider = new Enemy("Spider", new Vector2 (150, 150), 0.0f, new Vector2(1,1), null,
+						new AnimationController("anims/spider.anim"), difficulty, player, tileMap);
+				enemies.add(spider);
+				countEnemy += 1;
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+			bullets.add(new Bullet(player.position, player.getDirection(), tileMap.getMapWidth(), tileMap.getMapHeight(), false));
+		}
+//		System.out.println("Player: " + player.getHp() + "; Spider: " + spider.getHp());
+
+		for (Enemy enemy: enemies) {
+			enemy.countdownToAttack -= delta;
+			if (enemy.countdownToAttack <= 0 && enemy.getHp() > 0) {
+				enemy.countdownToAttack = 1;
+				bullets.add(new Bullet(enemy.position, enemy.getDirectionBullet(), tileMap.getMapWidth(), tileMap.getMapHeight(), true));
+			}
+		}
+
+		ArrayList<Bullet> bulletsToRemove = new ArrayList<Bullet>();
+		ArrayList<Enemy> enemiesToRemove = new ArrayList<Enemy>();
+		for (Bullet bullet : bullets) {
+			bullet.update(delta);
+			if (bullet.remove) {
+				bulletsToRemove.add(bullet);
+			}
+		}
+		for (Bullet bullet : bullets) {
+			for (Enemy enemy: enemies) {
+				if (bullet.getIsEnemy() == false && bullet.getCollisionRect().collidesWith(enemy.getCollisionRect())) {
+					bulletsToRemove.add(bullet);
+					enemy.hitShot(player);
+					if (enemy.getHp() <= 0) {
+						enemiesToRemove.add(enemy);
+					} else {
+						enemy.update();
+						enemy.draw(batch);
+					}
+				}
+				if (bullet.getIsEnemy() == true && bullet.getCollisionRect().collidesWith(player.getCollisionRect())) {
+					bulletsToRemove.add(bullet);
+					player.hitShot(enemy);
+				}
+			}
+		}
+
+		bullets.removeAll(bulletsToRemove);
+		enemies.removeAll(enemiesToRemove);
+
+		for (Enemy enemy: enemies) {
+			enemy.update();
+			enemy.draw(batch);
+		}
+
+		if (player.getHp() > 0) {
+			player.update();
+			player.draw(batch);
+		} else {
+			parent.changeScreen(SimpleRPGGame.MENU);
+		}
+
+		for (Bullet bullet: bullets) {
+			bullet.draw(batch);
+		}
+
 		batch.end();
 	}
 
@@ -113,25 +198,20 @@ public class GameScreen implements Screen, InputProcessor {
 		if(keycode == Input.Keys.UP){
 			player.move(Direction.UP);
 			return true;
-		}
-		else if(keycode == Input.Keys.LEFT){
+		} else if(keycode == Input.Keys.LEFT){
 			player.move(Direction.LEFT);
 			return true;
-		}
-		else if(keycode == Input.Keys.DOWN){
+		} else if(keycode == Input.Keys.DOWN){
 			player.move(Direction.DOWN);
 			return true;
-		}
-		else if(keycode == Input.Keys.RIGHT){
+		} else if(keycode == Input.Keys.RIGHT){
 			player.move(Direction.RIGHT);
 			return true;
-		}
-		else if (keycode == Input.Keys.ESCAPE) {
+		} else if (keycode == Input.Keys.ESCAPE) {
 			isPause = true;
 			parent.changeScreen(SimpleRPGGame.PAUSE);
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
