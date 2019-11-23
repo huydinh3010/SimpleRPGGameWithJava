@@ -9,40 +9,43 @@ import com.simplerpg.game.tilemap.TileMap;
 import com.simplerpg.game.character.Difficulty;
 import com.badlogic.gdx.Gdx;
 import java.util.Random;
+
 import static java.lang.Math.abs;
 
 public class Enemy extends Characters {
     public static final String TAG = Enemy.class.getName();
     private Player player; // dung de xac dinh vi tri player
     private Random rd = new Random();
-
-    public Enemy() {
-
-    }
+    public float countdownToAttack = 1;
+    private Direction directionBullet = Direction.DOWN;
 
     public Enemy(String name, Vector2 position, float rotation, Vector2 scale, Sprite sprite,
                  AnimationController animationController, Difficulty difficulty, Player player, TileMap tileMap) {
         super(name, position, rotation, scale, sprite, animationController, tileMap, difficulty);
         this.player = player;
         if (difficulty == Difficulty.EASY){
-            this.hp = 3;
+            this.hp = 30;
             this.damage = 1;
             this.speed = 1;
         } else if (difficulty == Difficulty.MEDIUM){
-            this.hp = 5;
+            this.hp = 50;
             this.damage = 2;
             this.speed = 2;
         } else { // Difficulty.HARD
-            this.hp = 7;
+            this.hp = 70;
             this.damage = 3;
             this.speed = 3;
         }
+
     }
 
     @Override
     public void update() {
         Direction nextMove = this.nextMove();
         if (nextMove != this.direction){
+            if (nextMove != Direction.IDLE) {
+                this.directionBullet = nextMove;
+            }
             move(nextMove);
         }
         if (!tileMap.hitAWall(this.position.x + velocity.x, this.position.y + velocity.y, 15, 6)) {
@@ -128,6 +131,10 @@ public class Enemy extends Characters {
 
     public Direction getDirection() {
         return direction;
+    }
+
+    public Direction getDirectionBullet() {
+        return directionBullet;
     }
 
     public void setDirection(Direction direction) {

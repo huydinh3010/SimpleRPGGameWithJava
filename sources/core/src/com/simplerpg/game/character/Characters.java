@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.simplerpg.game.GameObject;
+import com.simplerpg.game.collision.CollisionRect;
 import com.simplerpg.game.tilemap.TileMap;
 import com.simplerpg.game.animation.AnimationController;
 import com.simplerpg.game.character.Difficulty;
@@ -16,6 +17,7 @@ public class Characters extends GameObject {
     int hp;
     int damage;
     Difficulty difficulty; // do kho
+    CollisionRect rect;
 
     public Characters() {
 
@@ -26,6 +28,7 @@ public class Characters extends GameObject {
         super(name, position, rotation, scale, sprite, animationController);
         this.tileMap = tileMap;
         this.difficulty = difficulty;
+        rect = new CollisionRect(position, 32, 32);
     }
 
     public void move(Direction newDirection){
@@ -82,6 +85,14 @@ public class Characters extends GameObject {
         animationController.play(animName);
     }
 
+    public void hitShot(Characters character) {
+        this.hp -= character.damage;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
     @Override
     public void update() {
         if (!tileMap.hitAWall(this.position.x + velocity.x, this.position.y + velocity.y, 15, 6)) {
@@ -114,5 +125,9 @@ public class Characters extends GameObject {
 
     public void setVelocity(Vector2 velocity) {
         this.velocity = velocity;
+    }
+
+    public CollisionRect getCollisionRect() {
+        return rect;
     }
 }

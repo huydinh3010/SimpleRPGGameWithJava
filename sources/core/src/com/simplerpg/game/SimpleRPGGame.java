@@ -40,6 +40,7 @@ public class SimpleRPGGame extends Game {
                 if (menuScreen == null) {
                     menuScreen = new MenuScreen(this);
                 }
+                currentMap = 0;
                 this.setScreen(menuScreen);
                 break;
             case INTRODUCTION:
