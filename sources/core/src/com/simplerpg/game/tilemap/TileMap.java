@@ -2,6 +2,9 @@ package com.simplerpg.game.tilemap;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
+
+import java.util.Random;
 
 public class TileMap {
     private TileSet items[][];
@@ -255,6 +258,33 @@ public class TileMap {
             }
         }
         return false;
+    }
+
+    public Vector2 randomEnemy(){
+        Random r = new Random();
+        int i = 0;
+        int j = 0;
+        do{
+            i = r.nextInt(mapArray.length);
+            j = r.nextInt(mapArray[0].length);
+        } while (this.mapArray[i][j] != 2
+                && this.mapArray[i][j] !=0
+                && this.mapArray[i][j] !=1
+                && this.mapArray[i][j] !=10
+                && this.mapArray[i][j] !=11
+                && this.mapArray[i][j] !=12
+                && this.mapArray[i][j] !=13
+                && this.mapArray[i][j] !=14
+                && this.mapArray[i][j] !=15
+                && this.mapArray[i][j] !=32
+                && this.mapArray[i][j] !=33
+                && this.mapArray[i][j] !=45);
+
+        Vector2 position = new Vector2(i*this.cellSize, j*this.cellSize);
+        System.out.println("Position " + i + " " + j);
+        System.out.println(mapArray.length);
+        System.out.println(mapArray[0].length);
+        return position;
     }
 
     public TileSet[][] getItems() {

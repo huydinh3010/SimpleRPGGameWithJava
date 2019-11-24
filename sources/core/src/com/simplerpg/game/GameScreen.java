@@ -1,6 +1,7 @@
 package com.simplerpg.game;
 
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -31,7 +32,7 @@ public class GameScreen implements Screen, InputProcessor {
 	int   maxEnemy 			= 10;
 	int countEnemy 			= 0;
 
-	public GameScreen(SimpleRPGGame game, Difficulty difficulty, int[][] map){
+    public GameScreen(SimpleRPGGame game, Difficulty difficulty, int[][] map){
 		parent = game;
 		bullets = new ArrayList<Bullet>();
 		enemies = new ArrayList<Enemy>();
@@ -80,7 +81,7 @@ public class GameScreen implements Screen, InputProcessor {
 		if(isPause == true){
 			return;
 		}
-		if(player.isChangeMap){
+		if(player.isChangeMap && parent.point == parent.currentMap*maxEnemy){
 			parent.changeMap();
 		}
 
@@ -95,7 +96,7 @@ public class GameScreen implements Screen, InputProcessor {
 		if (countDownNewEnemy <= 0 && countEnemy < maxEnemy) {
 			countDownNewEnemy = 5;
 			try {
-				Enemy spider = new Enemy("Spider", new Vector2 (150, 150), 0.0f, new Vector2(1,1), null,
+				Enemy spider = new Enemy("Spider", tileMap.randomEnemy(), 0.0f, new Vector2(1,1), null,
 						new AnimationController("anims/spider.anim"), difficulty, player, tileMap);
 				enemies.add(spider);
 				countEnemy += 1;
@@ -128,9 +129,11 @@ public class GameScreen implements Screen, InputProcessor {
 			for (Enemy enemy: enemies) {
 				if (bullet.getIsEnemy() == false && bullet.getCollisionRect().collidesWith(enemy.getCollisionRect())) {
 					bulletsToRemove.add(bullet);
-					enemy.hitShot(player);
+					enemy.hitShotBy(player);
+//					parent.playPainEnemySound();
 					if (enemy.getHp() <= 0) {
 						enemiesToRemove.add(enemy);
+						parent.point++;
 					} else {
 						enemy.update();
 						enemy.draw(batch);
@@ -138,7 +141,8 @@ public class GameScreen implements Screen, InputProcessor {
 				}
 				if (bullet.getIsEnemy() == true && bullet.getCollisionRect().collidesWith(player.getCollisionRect())) {
 					bulletsToRemove.add(bullet);
-					player.hitShot(enemy);
+					player.hitShotBy(enemy);
+//					parent.playPainPlayerSound();
 				}
 			}
 		}
@@ -155,7 +159,7 @@ public class GameScreen implements Screen, InputProcessor {
 			player.update();
 			player.draw(batch);
 		} else {
-			parent.changeScreen(SimpleRPGGame.MENU);
+			parent.endGame(parent.point);
 		}
 
 		for (Bullet bullet: bullets) {

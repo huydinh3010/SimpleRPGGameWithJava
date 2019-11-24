@@ -16,9 +16,9 @@ public class Player extends Characters {
             this.damage = 3;
             this.speed = 5;
         } else if (difficulty == Difficulty.MEDIUM){
-            this.hp = 20;
-            this.damage = 2;
-            this.speed = 4;
+            this.hp = 30;
+            this.damage = 3;
+            this.speed = 5;
         } else { // Difficulty.HARD
             this.hp = 15;
             this.damage = 1;

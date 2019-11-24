@@ -2,6 +2,8 @@ package com.simplerpg.game;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.simplerpg.game.character.Difficulty;
 import com.simplerpg.game.tilemap.TileMap;
 
@@ -14,17 +16,23 @@ public class SimpleRPGGame extends Game {
     private IntroductionScreen introductionScreen;
     private LevelScreen levelScreen;
     private PauseScreen pauseScreen;
-    private Difficulty currentLevel;
-    private int currentMap = 0;
+    private EndScreen loseScreen;
 
-    public final static int MENU = 0;
-    public final static int INTRODUCTION = 1;
-    public final static int GAME_EASY = 2;
-    public final static int GAME_HARD = 5;
-    public final static int ENDGAME = 3;
-    public final static int LEVEL = 4;
-    public final static int RESUME = 6;
-    public final static int PAUSE = 7;
+    public Difficulty currentLevel;
+    public int currentMap = 0;
+
+    public int point = 0;
+//    private final Sound painPlayerSound   = Gdx.audio.newSound(Gdx.files.internal("pain1.wav"));
+//    private final Sound painEnemySound    = Gdx.audio.newSound(Gdx.files.internal("sounds/pain2.wav"));
+    public final static int MENU            = 0;
+    public final static int INTRODUCTION    = 1;
+    public final static int GAME_EASY       = 2;
+    public final static int GAME_HARD       = 5;
+    public final static int ENDGAME         = 3;
+    public final static int LEVEL           = 4;
+    public final static int RESUME          = 6;
+    public final static int PAUSE           = 7;
+    public final static int WIN             = 1000;
     /**
      * Called when the {@link Application} is first created.
      */
@@ -33,7 +41,10 @@ public class SimpleRPGGame extends Game {
         loadingScreen = new LoadingScreen(this);
         setScreen(loadingScreen);
     }
-
+    public void endGame(int point){
+        EndScreen endScreen = new EndScreen(this, point);
+        this.setScreen(endScreen);
+    }
     public void changeScreen(int screen) {
         switch (screen) {
             case MENU:
@@ -57,12 +68,6 @@ public class SimpleRPGGame extends Game {
                 currentLevel = Difficulty.MEDIUM;
                 changeMap();
                 break;
-            case ENDGAME:
-                if (endScreen == null) {
-                    endScreen = new EndScreen(this);
-                }
-                this.setScreen(endScreen);
-                break;
             case LEVEL:
                 if (levelScreen == null) {
                     levelScreen = new LevelScreen(this);
@@ -83,12 +88,13 @@ public class SimpleRPGGame extends Game {
 
     public void changeMap (){
         if(currentMap == 2){
-            changeScreen(MENU);
+            endGame(WIN);
             currentMap = 0;
             return;
         }
 
         if(currentMap == 0){
+            point = 0;
             mainScreen = new GameScreen(this, currentLevel, TileMap.map1);
         }
         if(currentMap == 1) {
@@ -98,4 +104,12 @@ public class SimpleRPGGame extends Game {
         this.setScreen(mainScreen);
         currentMap++;
     }
+
+//    public void playPainPlayerSound(){
+//        painPlayerSound.play();
+//    }
+//
+//    public void playPainEnemySound() {
+//        painEnemySound.play();
+//    }
 }
