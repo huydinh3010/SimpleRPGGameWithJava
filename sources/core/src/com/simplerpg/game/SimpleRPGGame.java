@@ -15,6 +15,7 @@ public class SimpleRPGGame extends Game {
     private MenuScreen menuScreen;
     private EndScreen endScreen;
     private IntroductionScreen introductionScreen;
+    private AboutUsScreen aboutUsScreen;
     private LevelScreen levelScreen;
     private PauseScreen pauseScreen;
     private EndScreen loseScreen;
@@ -38,6 +39,7 @@ public class SimpleRPGGame extends Game {
     public final static int LEVEL           = 4;
     public final static int RESUME          = 6;
     public final static int PAUSE           = 7;
+    public final static int ABOUT           = 8;
     public final static int WIN             = 1000;
     /**
      * Called when the {@link Application} is first created.
@@ -77,6 +79,12 @@ public class SimpleRPGGame extends Game {
                     introductionScreen = new IntroductionScreen(this);
                 }
                 this.setScreen(introductionScreen);
+                break;
+            case ABOUT:
+                if (aboutUsScreen == null) {
+                    aboutUsScreen = new AboutUsScreen(this);
+                }
+                this.setScreen(aboutUsScreen);
                 break;
             case GAME_EASY:
                 currentLevel = Difficulty.EASY;

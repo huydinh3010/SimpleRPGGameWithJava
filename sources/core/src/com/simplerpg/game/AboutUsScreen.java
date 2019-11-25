@@ -1,22 +1,23 @@
 package com.simplerpg.game;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-public class MenuScreen implements Screen {
-
+public class AboutUsScreen implements Screen {
     private SimpleRPGGame parent;
     private Stage stage;
 
-    public MenuScreen(SimpleRPGGame game) {
+    public AboutUsScreen(SimpleRPGGame game) {
         parent = game;
 
         stage = new Stage(new ScreenViewport());
@@ -25,8 +26,9 @@ public class MenuScreen implements Screen {
         stage.draw();
     }
 
+
     /**
-     * Called when this screen becomes the current screen for a {@link Game}.
+     * Called when this screen becomes the current screen.
      */
     @Override
     public void show() {
@@ -38,18 +40,50 @@ public class MenuScreen implements Screen {
 
         Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
 
-        TextButton newGame = new TextButton("New Game", skin);
-        TextButton introduction = new TextButton("Introduction", skin);
-        TextButton aboutUs = new TextButton("About Us", skin);
+        BitmapFont font = skin.getFont("font-big");
+        Label.LabelStyle style = new Label.LabelStyle();
+        style.font = font;
+
+        TextButton menu = new TextButton("Menu", skin);
         TextButton exit = new TextButton("Exit", skin);
 
-        table.add(newGame);
-        table.row().pad(10, 0, 10, 0);
-        table.add(introduction).fillX().uniform();
+        Label info1   = new Label("This is a simple RPG game project for OOP subject.", skin);
+        Label info2   = new Label("HUST - 20191", skin);
+        Label teacher = new Label("Teacher: Nguyen Manh Tuan", skin);
+        Label group   = new Label("Group 13", skin);
+        Label students= new Label("Students:", skin);
+        Label student1= new Label("Hoang The Anh - 20172945", skin);
+        Label student2= new Label("Mai Van Hoa - 20173122", skin);
+        Label student3= new Label("Mai The Hung - 20173161", skin);
+        Label student4= new Label("Ha Hai Phong - 20173299", skin);
+        Label student5= new Label("Nguyen Huy Dinh - 20161042", skin);
+//        result.setWrap(true);
+//        numOfKilledEnemies.setWrap(true);
+
+        table.add(info1);
         table.row();
-        table.add(aboutUs).fillX().uniform();
-        table.row().pad(10, 0, 10, 0);
-        table.add(exit).fillX().uniform();
+        table.add(info2);
+        table.row();
+        table.add(teacher);
+        table.row();
+        table.add(group);
+        table.row();
+        table.add(students);
+        table.row();
+        table.add(student1);
+        table.row();
+        table.add(student2);
+        table.row();
+        table.add(student3);
+        table.row();
+        table.add(student4);
+        table.row().padBottom(30);
+        table.add(student5);
+        table.row();
+
+        table.add(menu).width(300);
+        //table.row().pad(10, 0, 10, 0);
+        //table.add(exit).width(300);
 
         stage.getViewport().update(600, 400, true);
 
@@ -60,24 +94,10 @@ public class MenuScreen implements Screen {
             }
         });
 
-        newGame.addListener(new ChangeListener() {
+        menu.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                parent.changeScreen(SimpleRPGGame.LEVEL);
-            }
-        });
-
-        introduction.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                parent.changeScreen(SimpleRPGGame.INTRODUCTION);
-            }
-        });
-
-        aboutUs.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                parent.changeScreen(SimpleRPGGame.ABOUT);
+                parent.changeScreen(SimpleRPGGame.MENU);
             }
         });
     }
@@ -95,12 +115,10 @@ public class MenuScreen implements Screen {
         stage.draw();
     }
 
-
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
     }
-
 
     @Override
     public void pause() {
@@ -112,17 +130,11 @@ public class MenuScreen implements Screen {
 
     }
 
-    /**
-     * Called when this screen is no longer the current screen for a {@link Game}.
-     */
     @Override
     public void hide() {
 
     }
 
-    /**
-     * Called when this screen should release all resources.
-     */
     @Override
     public void dispose() {
         stage.dispose();

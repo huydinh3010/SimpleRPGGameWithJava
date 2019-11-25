@@ -29,7 +29,7 @@ public class EndScreen implements Screen {
 
 
     /**
-     * Called when this screen becomes the current screen for a {@link Game}.
+     * Called when this screen becomes the current screen.
      */
     @Override
     public void show() {
@@ -63,9 +63,9 @@ public class EndScreen implements Screen {
         table.row();
         table.add(numOfKilledEnemies);
         table.row();
-        table.add(menu);
+        table.add(menu).width(300);
         table.row().pad(10, 0, 10, 0);
-        table.add(exit);
+        table.add(exit).width(300);
 
         stage.getViewport().update(600, 400, true);
 
