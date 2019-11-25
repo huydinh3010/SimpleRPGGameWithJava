@@ -3,6 +3,7 @@ package com.simplerpg.game;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.simplerpg.game.character.Difficulty;
 import com.simplerpg.game.tilemap.TileMap;
@@ -22,8 +23,13 @@ public class SimpleRPGGame extends Game {
     public int currentMap = 0;
 
     public int point = 0;
-//    private final Sound painPlayerSound   = Gdx.audio.newSound(Gdx.files.internal("pain1.wav"));
-//    private final Sound painEnemySound    = Gdx.audio.newSound(Gdx.files.internal("sounds/pain2.wav"));
+
+    private Sound deathPlayerSound;
+    private Sound deathEnemySound;
+    private Sound painPlayerSound;
+    private Sound painEnemySound;
+    private Music backgroundMusic;
+
     public final static int MENU            = 0;
     public final static int INTRODUCTION    = 1;
     public final static int GAME_EASY       = 2;
@@ -38,10 +44,22 @@ public class SimpleRPGGame extends Game {
      */
     @Override
     public void create() {
+        painPlayerSound     = Gdx.audio.newSound(Gdx.files.internal("sounds/pain1.mp3"));
+        painEnemySound      = Gdx.audio.newSound(Gdx.files.internal("sounds/pain2.mp3"));
+        deathPlayerSound    = Gdx.audio.newSound(Gdx.files.internal("sounds/death1.mp3"));
+        deathEnemySound     = Gdx.audio.newSound(Gdx.files.internal("sounds/death2.mp3"));
+
+        backgroundMusic   = Gdx.audio.newMusic(Gdx.files.internal("music/airtone_panspermia_1.mp3"));
+        backgroundMusic.setLooping(true);
+        backgroundMusic.play();
+
         loadingScreen = new LoadingScreen(this);
         setScreen(loadingScreen);
     }
     public void endGame(int point){
+//        painPlayerSound.dispose();
+//        painEnemySound.dispose();
+//        backgroundMusic.dispose();
         EndScreen endScreen = new EndScreen(this, point);
         this.setScreen(endScreen);
     }
@@ -105,11 +123,19 @@ public class SimpleRPGGame extends Game {
         currentMap++;
     }
 
-//    public void playPainPlayerSound(){
-//        painPlayerSound.play();
-//    }
-//
-//    public void playPainEnemySound() {
-//        painEnemySound.play();
-//    }
+    public void playPainPlayerSound(){
+        painPlayerSound.play(0.2f, 1, 0);
+    }
+
+    public void playPainEnemySound() {
+        painEnemySound.play(0.3f, 1, 0);
+    }
+
+    public void playDeathPlayerSound(){
+        deathPlayerSound.play(0.5f, 1, 0);
+    }
+
+    public void playDeathEnemySound(){
+        deathEnemySound.play(0.5f, 1, 0);
+    }
 }

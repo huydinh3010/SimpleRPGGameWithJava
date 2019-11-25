@@ -130,10 +130,11 @@ public class GameScreen implements Screen, InputProcessor {
 				if (bullet.getIsEnemy() == false && bullet.getCollisionRect().collidesWith(enemy.getCollisionRect())) {
 					bulletsToRemove.add(bullet);
 					enemy.hitShotBy(player);
-//					parent.playPainEnemySound();
+					parent.playPainEnemySound();
 					if (enemy.getHp() <= 0) {
 						enemiesToRemove.add(enemy);
 						parent.point++;
+						parent.playDeathEnemySound();
 					} else {
 						enemy.update();
 						enemy.draw(batch);
@@ -142,7 +143,7 @@ public class GameScreen implements Screen, InputProcessor {
 				if (bullet.getIsEnemy() == true && bullet.getCollisionRect().collidesWith(player.getCollisionRect())) {
 					bulletsToRemove.add(bullet);
 					player.hitShotBy(enemy);
-//					parent.playPainPlayerSound();
+					parent.playPainPlayerSound();
 				}
 			}
 		}
@@ -160,6 +161,7 @@ public class GameScreen implements Screen, InputProcessor {
 			player.draw(batch);
 		} else {
 			parent.endGame(parent.point);
+			parent.playDeathPlayerSound();
 		}
 
 		for (Bullet bullet: bullets) {
