@@ -85,7 +85,7 @@ public class Characters extends GameObject {
         animationController.play(animName);
     }
 
-    public void hitShot(Characters character) {
+    public void hitShotBy(Characters character) {
         this.hp -= character.damage;
     }
 

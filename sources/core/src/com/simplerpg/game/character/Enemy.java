@@ -28,9 +28,9 @@ public class Enemy extends Characters {
             this.damage = 1;
             this.speed = 1;
         } else if (difficulty == Difficulty.MEDIUM){
-            this.hp = 50;
-            this.damage = 2;
-            this.speed = 2;
+            this.hp = 30;
+            this.damage = 1;
+            this.speed = 1;
         } else { // Difficulty.HARD
             this.hp = 70;
             this.damage = 3;
