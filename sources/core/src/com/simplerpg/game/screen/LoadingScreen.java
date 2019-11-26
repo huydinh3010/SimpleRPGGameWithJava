@@ -1,7 +1,8 @@
-package com.simplerpg.game;
+package com.simplerpg.game.screen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
+import com.simplerpg.game.SimpleRPGGame;
 
 public class LoadingScreen implements Screen {
 

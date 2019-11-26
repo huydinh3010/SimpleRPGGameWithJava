@@ -1,4 +1,4 @@
-package com.simplerpg.game;
+package com.simplerpg.game.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -12,14 +12,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.simplerpg.game.SimpleRPGGame;
 
-public class AboutUsScreen implements Screen {
+public class EndScreen implements Screen {
     private SimpleRPGGame parent;
     private Stage stage;
+    private int point;
 
-    public AboutUsScreen(SimpleRPGGame game) {
+    public EndScreen(SimpleRPGGame game, int point) {
         parent = game;
-
+        this.point = point;
         stage = new Stage(new ScreenViewport());
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
@@ -47,43 +49,24 @@ public class AboutUsScreen implements Screen {
         TextButton menu = new TextButton("Menu", skin);
         TextButton exit = new TextButton("Exit", skin);
 
-        Label info1   = new Label("This is a simple RPG game project for OOP subject.", skin);
-        Label info2   = new Label("HUST - 20191", skin);
-        Label teacher = new Label("Teacher: Nguyen Manh Tuan", skin);
-        Label group   = new Label("Group 13", skin);
-        Label students= new Label("Students:", skin);
-        Label student1= new Label("Hoang The Anh - 20172945", skin);
-        Label student2= new Label("Mai Van Hoa - 20173122", skin);
-        Label student3= new Label("Mai The Hung - 20173161", skin);
-        Label student4= new Label("Ha Hai Phong - 20173299", skin);
-        Label student5= new Label("Nguyen Huy Dinh - 20161042", skin);
+        Label result, numOfKilledEnemies;
+        if(point == SimpleRPGGame.WIN){
+            result = new Label("You Win!", style);
+            numOfKilledEnemies = new Label("You killed all enemies!", style);
+        }
+        else{
+            result = new Label("You Lose!", style);
+            numOfKilledEnemies = new Label("You killed " + point + (point < 2 ? " enemy!" : " enemies!"), style);
+        }
 //        result.setWrap(true);
 //        numOfKilledEnemies.setWrap(true);
-
-        table.add(info1);
+        table.add(result);
         table.row();
-        table.add(info2);
+        table.add(numOfKilledEnemies);
         table.row();
-        table.add(teacher);
-        table.row();
-        table.add(group);
-        table.row();
-        table.add(students);
-        table.row();
-        table.add(student1);
-        table.row();
-        table.add(student2);
-        table.row();
-        table.add(student3);
-        table.row();
-        table.add(student4);
-        table.row().padBottom(30);
-        table.add(student5);
-        table.row();
-
         table.add(menu).width(300);
-        //table.row().pad(10, 0, 10, 0);
-        //table.add(exit).width(300);
+        table.row().pad(10, 0, 10, 0);
+        table.add(exit).width(300);
 
         stage.getViewport().update(600, 400, true);
 

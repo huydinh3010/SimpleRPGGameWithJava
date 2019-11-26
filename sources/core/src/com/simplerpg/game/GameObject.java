@@ -8,7 +8,7 @@ import com.simplerpg.game.collision.Collider;
 
 public abstract class GameObject {
     protected String name;
-    protected Vector2 position;
+    public Vector2 position;
     protected float rotation;
     protected Vector2 scale;
     protected Sprite sprite;

@@ -1,4 +1,4 @@
-package com.simplerpg.game;
+package com.simplerpg.game.screen;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.audio.Sound;
@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.simplerpg.game.SimpleRPGGame;
 import com.simplerpg.game.animation.AnimationController;
 import com.simplerpg.game.character.*;
 import com.simplerpg.game.character.Difficulty;

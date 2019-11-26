@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.simplerpg.game.character.Difficulty;
+import com.simplerpg.game.screen.*;
 import com.simplerpg.game.tilemap.TileMap;
 
 public class SimpleRPGGame extends Game {
@@ -113,7 +114,7 @@ public class SimpleRPGGame extends Game {
     }
 
     public void changeMap (){
-        if(currentMap == 2){
+        if(currentMap == 3){
             endGame(WIN);
             currentMap = 0;
             return;
@@ -125,6 +126,9 @@ public class SimpleRPGGame extends Game {
         }
         if(currentMap == 1) {
             mainScreen = new GameScreen(this, currentLevel, TileMap.map2);
+        }
+        if(currentMap == 2){
+            mainScreen = new GameScreen(this, currentLevel, TileMap.map3);
         }
 
         this.setScreen(mainScreen);

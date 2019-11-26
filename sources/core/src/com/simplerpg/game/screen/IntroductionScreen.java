@@ -1,22 +1,24 @@
-package com.simplerpg.game;
+package com.simplerpg.game.screen;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.simplerpg.game.SimpleRPGGame;
 
-public class MenuScreen implements Screen {
-
+public class IntroductionScreen implements Screen {
     private SimpleRPGGame parent;
     private Stage stage;
 
-    public MenuScreen(SimpleRPGGame game) {
+    public IntroductionScreen(SimpleRPGGame game) {
         parent = game;
 
         stage = new Stage(new ScreenViewport());
@@ -25,8 +27,9 @@ public class MenuScreen implements Screen {
         stage.draw();
     }
 
+
     /**
-     * Called when this screen becomes the current screen for a {@link Game}.
+     * Called when this screen becomes the current screen.
      */
     @Override
     public void show() {
@@ -38,18 +41,33 @@ public class MenuScreen implements Screen {
 
         Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
 
-        TextButton newGame = new TextButton("New Game", skin);
-        TextButton introduction = new TextButton("Introduction", skin);
-        TextButton aboutUs = new TextButton("About Us", skin);
+        BitmapFont font = skin.getFont("font-big");
+        Label.LabelStyle style = new Label.LabelStyle();
+        style.font = font;
+
+        TextButton menu = new TextButton("Menu", skin);
         TextButton exit = new TextButton("Exit", skin);
 
-        table.add(newGame);
-        table.row().pad(10, 0, 10, 0);
-        table.add(introduction).fillX().uniform();
+        Label info1, info2, pause, shot;
+        info1 = new Label("Find and kill all the enemies then find the position to change map.", skin);
+        info2 = new Label("In the hard game, the enemies can follow you!", skin);
+        pause= new Label("ESC: Pause", style);
+        shot = new Label("Space: Shot", style);
+
+//        result.setWrap(true);
+//        numOfKilledEnemies.setWrap(true);
+
+        table.add(info1);
         table.row();
-        table.add(aboutUs).fillX().uniform();
+        table.add(info2);
+        table.row();
+        table.add(pause);
+        table.row().padBottom(20);
+        table.add(shot);
+        table.row();
+        table.add(menu).width(300);
         table.row().pad(10, 0, 10, 0);
-        table.add(exit).fillX().uniform();
+        table.add(exit).width(300);
 
         stage.getViewport().update(600, 400, true);
 
@@ -60,24 +78,10 @@ public class MenuScreen implements Screen {
             }
         });
 
-        newGame.addListener(new ChangeListener() {
+        menu.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                parent.changeScreen(SimpleRPGGame.LEVEL);
-            }
-        });
-
-        introduction.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                parent.changeScreen(SimpleRPGGame.INTRODUCTION);
-            }
-        });
-
-        aboutUs.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                parent.changeScreen(SimpleRPGGame.ABOUT);
+                parent.changeScreen(SimpleRPGGame.MENU);
             }
         });
     }
@@ -95,12 +99,10 @@ public class MenuScreen implements Screen {
         stage.draw();
     }
 
-
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
     }
-
 
     @Override
     public void pause() {
@@ -112,17 +114,11 @@ public class MenuScreen implements Screen {
 
     }
 
-    /**
-     * Called when this screen is no longer the current screen for a {@link Game}.
-     */
     @Override
     public void hide() {
 
     }
 
-    /**
-     * Called when this screen should release all resources.
-     */
     @Override
     public void dispose() {
         stage.dispose();

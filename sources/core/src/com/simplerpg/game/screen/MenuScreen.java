@@ -1,21 +1,23 @@
-package com.simplerpg.game;
+package com.simplerpg.game.screen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.simplerpg.game.SimpleRPGGame;
 
-public class LevelScreen implements Screen {
+public class MenuScreen implements Screen {
+
     private SimpleRPGGame parent;
     private Stage stage;
-    public LevelScreen(SimpleRPGGame game){
+
+    public MenuScreen(SimpleRPGGame game) {
         parent = game;
 
         stage = new Stage(new ScreenViewport());
@@ -37,35 +39,46 @@ public class LevelScreen implements Screen {
 
         Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
 
-        TextButton easy = new TextButton("Easy", skin);
-        TextButton hard = new TextButton("Hard", skin);
-        TextButton back = new TextButton("Back", skin);
+        TextButton newGame = new TextButton("New Game", skin);
+        TextButton introduction = new TextButton("Introduction", skin);
+        TextButton aboutUs = new TextButton("About Us", skin);
+        TextButton exit = new TextButton("Exit", skin);
 
-        table.add(easy);
+        table.add(newGame);
         table.row().pad(10, 0, 10, 0);
-        table.add(hard).fillX().uniform();
+        table.add(introduction).fillX().uniform();
         table.row();
-        table.add(back).fillX().uniform();
+        table.add(aboutUs).fillX().uniform();
+        table.row().pad(10, 0, 10, 0);
+        table.add(exit).fillX().uniform();
 
         stage.getViewport().update(600, 400, true);
-        back.addListener(new ChangeListener() {
+
+        exit.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                parent.changeScreen(SimpleRPGGame.MENU);
+                Gdx.app.exit();
             }
         });
 
-        easy.addListener(new ChangeListener() {
+        newGame.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                parent.changeScreen(SimpleRPGGame.GAME_EASY);
+                parent.changeScreen(SimpleRPGGame.LEVEL);
             }
         });
 
-        hard.addListener(new ChangeListener() {
+        introduction.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                parent.changeScreen(SimpleRPGGame.GAME_HARD);
+                parent.changeScreen(SimpleRPGGame.INTRODUCTION);
+            }
+        });
+
+        aboutUs.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                parent.changeScreen(SimpleRPGGame.ABOUT);
             }
         });
     }
@@ -83,10 +96,12 @@ public class LevelScreen implements Screen {
         stage.draw();
     }
 
+
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
     }
+
 
     @Override
     public void pause() {

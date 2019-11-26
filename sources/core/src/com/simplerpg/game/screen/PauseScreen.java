@@ -1,23 +1,22 @@
-package com.simplerpg.game;
+package com.simplerpg.game.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.simplerpg.game.SimpleRPGGame;
 
-public class IntroductionScreen implements Screen {
+public class PauseScreen implements Screen {
     private SimpleRPGGame parent;
     private Stage stage;
 
-    public IntroductionScreen(SimpleRPGGame game) {
+    public PauseScreen(SimpleRPGGame game) {
         parent = game;
 
         stage = new Stage(new ScreenViewport());
@@ -28,7 +27,7 @@ public class IntroductionScreen implements Screen {
 
 
     /**
-     * Called when this screen becomes the current screen.
+     * Called when this screen becomes the current screen for a {@link Game}.
      */
     @Override
     public void show() {
@@ -40,33 +39,15 @@ public class IntroductionScreen implements Screen {
 
         Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
 
-        BitmapFont font = skin.getFont("font-big");
-        Label.LabelStyle style = new Label.LabelStyle();
-        style.font = font;
-
+        TextButton resume = new TextButton("Resume", skin);
         TextButton menu = new TextButton("Menu", skin);
         TextButton exit = new TextButton("Exit", skin);
 
-        Label info1, info2, pause, shot;
-        info1 = new Label("Kill all the enemies and go out of the map to change map.", skin);
-        info2 = new Label("In the hard game, the enemies can follow you!", skin);
-        pause= new Label("ESC: Pause", style);
-        shot = new Label("Space: Shot", style);
-
-//        result.setWrap(true);
-//        numOfKilledEnemies.setWrap(true);
-
-        table.add(info1);
-        table.row();
-        table.add(info2);
-        table.row();
-        table.add(pause);
-        table.row().padBottom(20);
-        table.add(shot);
-        table.row();
-        table.add(menu).width(300);
+        table.add(resume);
         table.row().pad(10, 0, 10, 0);
-        table.add(exit).width(300);
+        table.add(menu).fillX().uniform();
+        table.row();
+        table.add(exit).fillX().uniform();
 
         stage.getViewport().update(600, 400, true);
 
@@ -74,6 +55,13 @@ public class IntroductionScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Gdx.app.exit();
+            }
+        });
+
+        resume.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                parent.changeScreen(SimpleRPGGame.RESUME);
             }
         });
 
