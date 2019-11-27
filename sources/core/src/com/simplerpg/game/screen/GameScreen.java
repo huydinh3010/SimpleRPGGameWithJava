@@ -240,7 +240,12 @@ public class GameScreen implements Screen, InputProcessor {
 			isPause = true;
 			parent.changeScreen(SimpleRPGGame.PAUSE);
 			return true;
-		} else {
+		} else if (keycode == Input.Keys.H){
+			// bat CHEAT MODE
+			player.setHp(9999);
+			player.setRangedDamage(9999);
+			return true;
+		} else  {
 			return false;
 		}
 	}

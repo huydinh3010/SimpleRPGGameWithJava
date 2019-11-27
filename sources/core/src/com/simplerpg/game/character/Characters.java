@@ -100,6 +100,26 @@ public class Characters extends GameObject {
         return hp;
     }
 
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public int getRangedDamage() {
+        return rangedDamage;
+    }
+
+    public void setRangedDamage(int rangedDamage) {
+        this.rangedDamage = rangedDamage;
+    }
+
+    public int getMeleeDamage() {
+        return meleeDamage;
+    }
+
+    public void setMeleeDamage(int meleeDamage) {
+        this.meleeDamage = meleeDamage;
+    }
+
     @Override
     public void update() {
         if (!tileMap.hitAWall(this.position.x + velocity.x, this.position.y + velocity.y, 15, 6)) {
