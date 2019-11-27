@@ -43,7 +43,7 @@ public class TileSet {
                 break;
             case WALL_4:
                 texture = new Texture("tilesets/walls.png");
-                sprite = new Sprite(texture, 9, 15, 28, 28);
+                sprite = new Sprite(texture, 9, 11, 28, 33);
                 break;
             case WALL_5:
                 texture = new Texture("tilesets/wall_5.png");
