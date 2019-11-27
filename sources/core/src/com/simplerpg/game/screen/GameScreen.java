@@ -15,6 +15,7 @@ import com.simplerpg.game.tilemap.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GameScreen implements Screen, InputProcessor {
 	SpriteBatch batch;
@@ -25,6 +26,7 @@ public class GameScreen implements Screen, InputProcessor {
 	boolean isPause = false;
 	private SimpleRPGGame parent;
 	private Stage stage;
+	private Random rd = new Random();
 
 	ArrayList<Bullet> bullets;
 	ArrayList<Enemy> enemies;
@@ -96,10 +98,17 @@ public class GameScreen implements Screen, InputProcessor {
 		countDownNewEnemy -= delta;
 		if (countDownNewEnemy <= 0 && countEnemy < maxEnemy) {
 			countDownNewEnemy = 5;
+			int rand_int = rd.nextInt(2);
 			try {
-				Enemy spider = new Enemy("Spider", tileMap.randomEnemy(), 0.0f, new Vector2(1,1), null,
-						new AnimationController("anims/spider.anim"), difficulty, player, tileMap);
-				enemies.add(spider);
+				Enemy newEnemy;
+				if (rand_int == 0) {
+					newEnemy = new Enemy("Spider", tileMap.randomEnemy(), 0.0f, new Vector2(1, 1), null,
+							new AnimationController("anims/spider.anim"), difficulty, player, tileMap, true);
+				} else {
+					newEnemy = new Enemy("Slug", tileMap.randomEnemy(), 0.0f, new Vector2(1, 1), null,
+							new AnimationController("anims/slug.anim"), difficulty, player, tileMap, false);
+				}
+				enemies.add(newEnemy);
 				countEnemy += 1;
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -112,9 +121,21 @@ public class GameScreen implements Screen, InputProcessor {
 
 		for (Enemy enemy: enemies) {
 			enemy.countdownToAttack -= delta;
-			if (enemy.countdownToAttack <= 0 && enemy.getHp() > 0) {
+			if (enemy.isAbleToShoot() && enemy.countdownToAttack <= 0 && enemy.getHp() > 0) {
 				enemy.countdownToAttack = 1;
 				bullets.add(new Bullet(enemy.position, enemy.getDirectionBullet(), tileMap.getMapWidth(), tileMap.getMapHeight(), true));
+			}
+			// xu ly danh can chien, tru mau nguoi choi khi va cham voi quai:
+			if (enemy.getCollisionRect().collidesWith(player.getCollisionRect())) {
+				// neu quai dang tan cong can chien nguoi choi roi thi khong tan cong lai nua,
+				// tranh viec hp tut theo moi khung hinh.
+				if (!enemy.getMeleeAttacking()) {
+					player.meleeAttackedBy(enemy);
+					parent.playPainPlayerSound();
+					enemy.setMeleeAttacking(true);
+				}
+			} else {
+				enemy.setMeleeAttacking(false);
 			}
 		}
 
@@ -126,11 +147,12 @@ public class GameScreen implements Screen, InputProcessor {
 				bulletsToRemove.add(bullet);
 			}
 		}
+		// xu ly danh tam xa, tru mau khi va cham voi dan:
 		for (Bullet bullet : bullets) {
 			for (Enemy enemy: enemies) {
 				if (bullet.getIsEnemy() == false && bullet.getCollisionRect().collidesWith(enemy.getCollisionRect())) {
 					bulletsToRemove.add(bullet);
-					enemy.hitShotBy(player);
+					enemy.rangedAttackBy(player);
 					parent.playPainEnemySound();
 					if (enemy.getHp() <= 0) {
 						enemiesToRemove.add(enemy);
@@ -143,7 +165,7 @@ public class GameScreen implements Screen, InputProcessor {
 				}
 				if (bullet.getIsEnemy() == true && bullet.getCollisionRect().collidesWith(player.getCollisionRect())) {
 					bulletsToRemove.add(bullet);
-					player.hitShotBy(enemy);
+					player.rangedAttackBy(enemy);
 					parent.playPainPlayerSound();
 				}
 			}

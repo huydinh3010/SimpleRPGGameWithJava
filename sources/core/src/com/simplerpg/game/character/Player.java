@@ -13,15 +13,18 @@ public class Player extends Characters {
         super(name, position, rotation, scale, sprite, animationController, tileMap, difficulty);
         if (difficulty == Difficulty.EASY){
             this.hp = 30;
-            this.damage = 3;
+            this.rangedDamage = 3;
+            this.meleeDamage = 5;
             this.speed = 5;
         } else if (difficulty == Difficulty.MEDIUM){
             this.hp = 30;
-            this.damage = 3;
+            this.rangedDamage = 3;
+            this.meleeDamage = 5;
             this.speed = 5;
         } else { // Difficulty.HARD
             this.hp = 15;
-            this.damage = 1;
+            this.rangedDamage = 2;
+            this.meleeDamage = 5;
             this.speed = 4;
         }
     }

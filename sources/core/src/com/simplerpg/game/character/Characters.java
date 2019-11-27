@@ -15,7 +15,8 @@ public class Characters extends GameObject {
     int speed;
     TileMap tileMap;
     int hp;
-    int damage;
+    int rangedDamage;
+    int meleeDamage;
     Difficulty difficulty; // do kho
     CollisionRect rect;
 
@@ -85,8 +86,14 @@ public class Characters extends GameObject {
         animationController.play(animName);
     }
 
-    public void hitShotBy(Characters character) {
-        this.hp -= character.damage;
+    public void rangedAttackBy(Characters character) {
+        // danh xa
+        this.hp -= character.rangedDamage;
+    }
+
+    public void meleeAttackedBy(Characters character){
+        // danh can chien
+        this.hp -= character.meleeDamage;
     }
 
     public int getHp() {

@@ -14,27 +14,41 @@ import static java.lang.Math.abs;
 
 public class Enemy extends Characters {
     public static final String TAG = Enemy.class.getName();
+
     private Player player; // dung de xac dinh vi tri player
     private Random rd = new Random();
+    private boolean isAbleToShoot;
     public float countdownToAttack = 1;
     private Direction directionBullet = Direction.DOWN;
+    private boolean meleeAttacking = false; // quai co dang tan cong can chien nguoi choi khong?
 
     public Enemy(String name, Vector2 position, float rotation, Vector2 scale, Sprite sprite,
-                 AnimationController animationController, Difficulty difficulty, Player player, TileMap tileMap) {
+                 AnimationController animationController, Difficulty difficulty, Player player, TileMap tileMap,
+                 boolean isAbleToShoot) {
         super(name, position, rotation, scale, sprite, animationController, tileMap, difficulty);
         this.player = player;
+        this.isAbleToShoot = isAbleToShoot;
+
         if (difficulty == Difficulty.EASY){
             this.hp = 30;
-            this.damage = 1;
+            this.rangedDamage = 1;
+            this.meleeDamage = 2;
             this.speed = 1;
         } else if (difficulty == Difficulty.MEDIUM){
             this.hp = 30;
-            this.damage = 1;
+            this.rangedDamage = 1;
+            this.meleeDamage = 3;
             this.speed = 1;
         } else { // Difficulty.HARD
             this.hp = 70;
-            this.damage = 3;
+            this.rangedDamage = 3;
+            this.meleeDamage = 5;
             this.speed = 3;
+        }
+        if (!isAbleToShoot){
+            this.hp += 30;
+            this.meleeDamage += 3;
+            this.speed += 2;
         }
 
     }
@@ -147,5 +161,17 @@ public class Enemy extends Characters {
 
     public void setVelocity(Vector2 velocity) {
         this.velocity = velocity;
+    }
+
+    public boolean isAbleToShoot() {
+        return isAbleToShoot;
+    }
+
+    public boolean getMeleeAttacking(){
+        return meleeAttacking;
+    }
+
+    public void setMeleeAttacking(boolean meleeAttacking){
+        this.meleeAttacking = meleeAttacking;
     }
 }
