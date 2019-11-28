@@ -27,6 +27,8 @@ public class GameScreen implements Screen, InputProcessor {
 	private SimpleRPGGame parent;
 	private Stage stage;
 	private Random rd = new Random();
+	private Vector2 mousePos = new Vector2();
+	private boolean cheatIsOn = false;
 
 	ArrayList<Bullet> bullets;
 	ArrayList<Enemy> enemies;
@@ -114,9 +116,7 @@ public class GameScreen implements Screen, InputProcessor {
 				e.printStackTrace();
 			}
 		}
-		if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-			bullets.add(new Bullet(player.position, player.getDirection(), tileMap.getMapWidth(), tileMap.getMapHeight(), false));
-		}
+
 //		System.out.println("Player: " + player.getHp() + "; Spider: " + spider.getHp());
 
 		for (Enemy enemy: enemies) {
@@ -224,16 +224,16 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		if(keycode == Input.Keys.UP){
+		if(keycode == Input.Keys.UP || keycode == Input.Keys.W){
 			player.move(Direction.UP);
 			return true;
-		} else if(keycode == Input.Keys.LEFT){
+		} else if(keycode == Input.Keys.LEFT || keycode == Input.Keys.A){
 			player.move(Direction.LEFT);
 			return true;
-		} else if(keycode == Input.Keys.DOWN){
+		} else if(keycode == Input.Keys.DOWN || keycode == Input.Keys.S){
 			player.move(Direction.DOWN);
 			return true;
-		} else if(keycode == Input.Keys.RIGHT){
+		} else if(keycode == Input.Keys.RIGHT || keycode == Input.Keys.D){
 			player.move(Direction.RIGHT);
 			return true;
 		} else if (keycode == Input.Keys.ESCAPE) {
@@ -242,6 +242,7 @@ public class GameScreen implements Screen, InputProcessor {
 			return true;
 		} else if (keycode == Input.Keys.H){
 			// bat CHEAT MODE
+			cheatIsOn = true;
 			player.setHp(9999);
 			player.setRangedDamage(9999);
 			return true;
@@ -252,19 +253,19 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean keyUp(int keycode) {
-		if(keycode == Input.Keys.UP){
+		if(keycode == Input.Keys.UP || keycode == Input.Keys.W){
 			player.idle();
 			return true;
 		}
-		else if(keycode == Input.Keys.LEFT){
+		else if(keycode == Input.Keys.LEFT || keycode == Input.Keys.A){
 			player.idle();
 			return true;
 		}
-		else if(keycode == Input.Keys.DOWN){
+		else if(keycode == Input.Keys.DOWN || keycode == Input.Keys.S){
 			player.idle();
 			return true;
 		}
-		else if(keycode == Input.Keys.RIGHT){
+		else if(keycode == Input.Keys.RIGHT || keycode == Input.Keys.D){
 			player.idle();
 			return true;
 		}
@@ -280,7 +281,13 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		return false;
+		mousePos = viewport.unproject(mousePos.set(screenX, screenY));
+		float x = mousePos.x - player.getPosition().x;
+		float y = mousePos.y - player.getPosition().y;
+		float denominator = Math.abs(x) + Math.abs(y);
+		bullets.add(new Bullet(player.position, new Vector2(x / denominator, y / denominator),
+				tileMap.getMapWidth(), tileMap.getMapHeight(), false));
+		return true;
 	}
 
 	@Override
@@ -290,6 +297,16 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		// kich hoat che do ban lien hoan khi CHEAT duoc bat
+		if (cheatIsOn){
+			mousePos = viewport.unproject(mousePos.set(screenX, screenY));
+			float x = mousePos.x - player.getPosition().x;
+			float y = mousePos.y - player.getPosition().y;
+			float denominator = Math.abs(x) + Math.abs(y);
+			bullets.add(new Bullet(player.position, new Vector2(x / denominator, y / denominator),
+					tileMap.getMapWidth(), tileMap.getMapHeight(), false));
+			return true;
+		}
 		return false;
 	}
 

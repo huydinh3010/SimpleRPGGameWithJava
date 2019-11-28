@@ -30,25 +30,25 @@ public class Enemy extends Characters {
         this.isAbleToShoot = isAbleToShoot;
 
         if (difficulty == Difficulty.EASY){
-            this.hp = 30;
+            this.hp = 10;
             this.rangedDamage = 1;
             this.meleeDamage = 2;
             this.speed = 1;
         } else if (difficulty == Difficulty.MEDIUM){
-            this.hp = 30;
+            this.hp = 10;
             this.rangedDamage = 1;
             this.meleeDamage = 3;
-            this.speed = 1;
+            this.speed = 2;
         } else { // Difficulty.HARD
-            this.hp = 70;
+            this.hp = 20;
             this.rangedDamage = 3;
             this.meleeDamage = 5;
             this.speed = 3;
         }
         if (!isAbleToShoot){
-            this.hp += 30;
-            this.meleeDamage += 3;
-            this.speed += 2;
+            this.hp += 10;
+            this.meleeDamage += 2;
+            this.speed += 1;
         }
 
     }
