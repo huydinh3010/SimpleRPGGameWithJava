@@ -35,6 +35,7 @@ public class SimpleRPGGame extends Game {
     public final static int MENU            = 0;
     public final static int INTRODUCTION    = 1;
     public final static int GAME_EASY       = 2;
+    public final static int GAME_MEDIUM     = 9;
     public final static int GAME_HARD       = 5;
     public final static int ENDGAME         = 3;
     public final static int LEVEL           = 4;
@@ -91,8 +92,12 @@ public class SimpleRPGGame extends Game {
                 currentLevel = Difficulty.EASY;
                 changeMap();
                 break;
-            case GAME_HARD:
+            case GAME_MEDIUM:
                 currentLevel = Difficulty.MEDIUM;
+                changeMap();
+                break;
+            case GAME_HARD:
+                currentLevel = Difficulty.HARD;
                 changeMap();
                 break;
             case LEVEL:

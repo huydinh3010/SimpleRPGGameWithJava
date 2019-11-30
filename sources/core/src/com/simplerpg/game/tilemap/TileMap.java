@@ -248,9 +248,9 @@ public class TileMap {
                 && this.mapArray[i][j] !=45);
 
         Vector2 position = new Vector2(i*this.cellSize, j*this.cellSize);
-        System.out.println("Position " + i + " " + j);
-        System.out.println(mapArray.length);
-        System.out.println(mapArray[0].length);
+//        System.out.println("Position " + i + " " + j);
+//        System.out.println(mapArray.length);
+//        System.out.println(mapArray[0].length);
         return position;
     }
 

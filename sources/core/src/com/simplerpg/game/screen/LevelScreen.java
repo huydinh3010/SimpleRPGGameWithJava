@@ -39,11 +39,14 @@ public class LevelScreen implements Screen {
         Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
 
         TextButton easy = new TextButton("Easy", skin);
+        TextButton medium = new TextButton("Medium", skin);
         TextButton hard = new TextButton("Hard", skin);
         TextButton back = new TextButton("Back", skin);
 
         table.add(easy);
         table.row().pad(10, 0, 10, 0);
+        table.add(medium).fillX().uniform();
+        table.row();
         table.add(hard).fillX().uniform();
         table.row();
         table.add(back).fillX().uniform();
@@ -62,7 +65,12 @@ public class LevelScreen implements Screen {
                 parent.changeScreen(SimpleRPGGame.GAME_EASY);
             }
         });
-
+        medium.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                parent.changeScreen(SimpleRPGGame.GAME_MEDIUM);
+            }
+        });
         hard.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {

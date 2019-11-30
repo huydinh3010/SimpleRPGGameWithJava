@@ -23,9 +23,9 @@ public class Player extends Characters {
             this.speed = 5;
         } else { // Difficulty.HARD
             this.hp = 15;
-            this.rangedDamage = 2;
+            this.rangedDamage = 3;
             this.meleeDamage = 5;
-            this.speed = 4;
+            this.speed = 6;
         }
     }
     @Override

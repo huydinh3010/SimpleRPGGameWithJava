@@ -82,7 +82,7 @@ public class GameScreen implements Screen, InputProcessor {
 	 */
 	@Override
 	public void render(float delta) {
-
+		System.out.println("Class GameScreen - FPS: " + 1/delta); // check FPS
 		if(isPause == true){
 			return;
 		}
@@ -240,15 +240,17 @@ public class GameScreen implements Screen, InputProcessor {
 			isPause = true;
 			parent.changeScreen(SimpleRPGGame.PAUSE);
 			return true;
+		} else if (keycode == Input.Keys.SPACE) {
+			bullets.add(new Bullet(player.position, player.getDirection(), tileMap.getMapWidth(), tileMap.getMapHeight(), false));
+			return true;
 		} else if (keycode == Input.Keys.H){
 			// bat CHEAT MODE
 			cheatIsOn = true;
 			player.setHp(9999);
 			player.setRangedDamage(9999);
 			return true;
-		} else  {
-			return false;
 		}
+		return false;
 	}
 
 	@Override
@@ -281,13 +283,17 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		mousePos = viewport.unproject(mousePos.set(screenX, screenY));
-		float x = mousePos.x - player.getPosition().x;
-		float y = mousePos.y - player.getPosition().y;
-		float denominator = Math.abs(x) + Math.abs(y);
-		bullets.add(new Bullet(player.position, new Vector2(x / denominator, y / denominator),
-				tileMap.getMapWidth(), tileMap.getMapHeight(), false));
-		return true;
+		// ban theo huong click chuot
+		if (button == Input.Buttons.LEFT && cheatIsOn) {
+			mousePos = viewport.unproject(mousePos.set(screenX, screenY));
+			float x = mousePos.x - player.getPosition().x;
+			float y = mousePos.y - player.getPosition().y;
+			float denominator = Math.abs(x) + Math.abs(y);
+			bullets.add(new Bullet(player.position, new Vector2(x / denominator, y / denominator),
+					tileMap.getMapWidth(), tileMap.getMapHeight(), false));
+			return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -297,8 +303,8 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		// kich hoat che do ban lien hoan khi CHEAT duoc bat
-		if (cheatIsOn){
+		// ban lien hoan khi re chuot
+		if (false){
 			mousePos = viewport.unproject(mousePos.set(screenX, screenY));
 			float x = mousePos.x - player.getPosition().x;
 			float y = mousePos.y - player.getPosition().y;

@@ -38,13 +38,20 @@ public class Bullet {
         this.direction = direction;
         this.isEnemy = isEnemy;
         this.rect = new CollisionRect(this.position, WIDTH, HEIGHT);
-
-        if (direction == Direction.UP || direction == Direction.DOWN) {
+        if (isEnemy) {
+            if (direction == Direction.UP || direction == Direction.DOWN) {
                 textureBulletVertical = new Texture("bullets/bullet/bullet_02.png");
-        }
+            }
 
-        if (direction == Direction.LEFT || direction == Direction.RIGHT) {
+            if (direction == Direction.LEFT || direction == Direction.RIGHT) {
                 textureBulletHorizontal = new Texture("bullets/bullet/bullet_01.png");
+            }
+        } else {
+            try {
+                animationController = new AnimationController("anims/brick.anim");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -65,14 +72,18 @@ public class Bullet {
     }
 
     public void update (float deltaTime) {
-        if (direction == null){ // dan do nguoi choi ban, theo huong click chuot
+        if (direction == null){ // ban theo huong click chuot
             position.x += SPEED * deltaTime * velocity.x;
             position.y += SPEED * deltaTime * velocity.y;
             if (!isFlying){
                 animationController.play("flying");
                 isFlying = true;
             }
-        } else { // dan do quai ban, chi co 4 huong
+        } else {
+            if (!isEnemy && !isFlying){ // dan nguoi choi ban theo 4 huong
+                animationController.play("flying");
+                isFlying = true;
+            }
             switch (direction) {
                 case UP:
                     position.y += SPEED * deltaTime;
@@ -104,13 +115,17 @@ public class Bullet {
         if (remove) {
             return;
         }
-        if (direction == null){
+        if (direction == null){ // dan cua player, ban theo huong click chuot
             Sprite sprite = animationController.getKeyFrame();
             sprite.setPosition(position.x, position.y);
             sprite.draw(batch);
-        } else if (direction == Direction.UP || direction == Direction.DOWN) {
+        } else if (!isEnemy){ // dan cua player, ban theo 4 huong co dinh
+            Sprite sprite = animationController.getKeyFrame();
+            sprite.setPosition(position.x, position.y);
+            sprite.draw(batch);
+        } else if (direction == Direction.UP || direction == Direction.DOWN) { // dan cua quai, ban theo 4 huong co dinh
                 batch.draw(textureBulletVertical, position.x, position.y);
-        } else {
+        } else { // RIGHT, LEFT
                 batch.draw(textureBulletHorizontal, position.x, position.y);
         }
     }
