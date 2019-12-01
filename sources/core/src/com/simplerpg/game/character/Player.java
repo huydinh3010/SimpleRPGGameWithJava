@@ -22,7 +22,7 @@ public class Player extends Characters {
             this.meleeDamage = 5;
             this.speed = 5;
         } else { // Difficulty.HARD
-            this.hp = 15;
+            this.hp = 30;
             this.rangedDamage = 3;
             this.meleeDamage = 5;
             this.speed = 6;

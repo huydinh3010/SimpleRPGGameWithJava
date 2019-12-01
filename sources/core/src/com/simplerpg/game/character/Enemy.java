@@ -46,12 +46,12 @@ public class Enemy extends Characters {
             this.hp = 10;
             this.rangedDamage = 1;
             this.meleeDamage = 3;
-            this.speed = 2;
+            this.speed = 1;
         } else { // Difficulty.HARD
-            this.hp = 20;
-            this.rangedDamage = 3;
-            this.meleeDamage = 5;
-            this.speed = 3;
+            this.hp = 10;
+            this.rangedDamage = 2;
+            this.meleeDamage = 4;
+            this.speed = 2;
         }
         if (!isAbleToShoot){
             this.hp += 10;
@@ -183,8 +183,8 @@ public class Enemy extends Characters {
     private float bfs_dist(float x, float y, int bfs_depth){
         // tra ve khoang cach ngan nhat tu (x, y) toi player (duyet bfs)
         // neu khong tim duoc (qua do sau), tra ve 1000 lan khoang cach manhattan nho nhat trong cac diem da xet
-        Map<Vector2, Integer> visited = new HashMap<>();
-        LinkedList<Vector2> queue = new LinkedList<>();
+        Map<Vector2, Integer> visited = new HashMap<Vector2, Integer>();
+        LinkedList<Vector2> queue = new LinkedList<Vector2>();
         visited.put(new Vector2(x, y), 0);
         queue.add(new Vector2(x, y));
         float min_dist = Integer.MAX_VALUE;

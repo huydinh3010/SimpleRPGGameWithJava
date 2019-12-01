@@ -48,7 +48,7 @@ public class LevelScreen implements Screen {
         table.add(medium).fillX().uniform();
         table.row();
         table.add(hard).fillX().uniform();
-        table.row();
+        table.row().pad(10, 0, 10, 0);
         table.add(back).fillX().uniform();
 
         stage.getViewport().update(600, 400, true);

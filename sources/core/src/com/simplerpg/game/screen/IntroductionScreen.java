@@ -48,9 +48,10 @@ public class IntroductionScreen implements Screen {
         TextButton menu = new TextButton("Menu", skin);
         TextButton exit = new TextButton("Exit", skin);
 
-        Label info1, info2, pause, shot;
+        Label info1, info2, info3, pause, shot;
         info1 = new Label("Find and kill all the enemies then find the position to change map.", skin);
-        info2 = new Label("In the hard game, the enemies can follow you!", skin);
+        info2 = new Label("There are 3 maps in each level.", skin);
+        info3 = new Label("In the harder level, the enemies are smarter and stronger!", skin);
         pause= new Label("ESC: Pause", style);
         shot = new Label("Space: Shot", style);
 
@@ -60,6 +61,8 @@ public class IntroductionScreen implements Screen {
         table.add(info1);
         table.row();
         table.add(info2);
+        table.row();
+        table.add(info3);
         table.row();
         table.add(pause);
         table.row().padBottom(20);
