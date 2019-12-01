@@ -219,7 +219,8 @@ public class TileMap {
         int end_j = (int) ((end_y-reduceR) / this.cellSize);
         for (int i = start_i; i <= end_i; i++){
             for (int j = start_j; j <= end_j; j++) {
-                if (i < 0 || j < 0 || i >= this.mapArray.length || j >= this.mapArray[0].length) {
+                //System.out.println(this.mapArray[i][j]);
+                if (this.mapArray[i][j] == 0) {
                     return true;
                 }
             }

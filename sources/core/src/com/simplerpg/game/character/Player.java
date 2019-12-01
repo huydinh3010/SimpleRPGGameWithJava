@@ -30,6 +30,7 @@ public class Player extends Characters {
     }
     @Override
     public void update() {
+        isChangeMap = false;
         super.update();
         if(tileMap.checkChangeMap(this.position.x + velocity.x, this.position.y + velocity.y, 15, 6)){
             isChangeMap = true;
