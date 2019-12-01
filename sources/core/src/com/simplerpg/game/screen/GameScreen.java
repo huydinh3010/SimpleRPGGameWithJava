@@ -49,7 +49,7 @@ public class GameScreen implements Screen, InputProcessor {
 		// fit viewport voi tilemap
 		viewport = new FitViewport(tileMap.getMapWidth(), tileMap.getMapHeight());
 		try {
-			player = new Player("pipyaka", new Vector2(90, 90), 0.0f, new Vector2(1,1), null,
+			player = new Player("pipyaka", new Vector2(30, 30), 0.0f, new Vector2(1,1), null,
 					new AnimationController("anims/player.anim"), tileMap, difficulty);
 		} catch (IOException e) {
 			e.printStackTrace();

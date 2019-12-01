@@ -49,7 +49,7 @@ public class IntroductionScreen implements Screen {
         TextButton exit = new TextButton("Exit", skin);
 
         Label info1, info2, info3, pause, shot;
-        info1 = new Label("Find and kill all the enemies then go to the gates to change map.", skin);
+        info1 = new Label("Find and kill all the enemies then go to the house top to change map.", skin);
         info2 = new Label("There are 3 maps in each level.", skin);
         info3 = new Label("In the harder level, the enemies are smarter and stronger!", skin);
         pause= new Label("ESC: Pause", style);
