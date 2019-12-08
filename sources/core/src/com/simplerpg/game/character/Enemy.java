@@ -27,7 +27,7 @@ public class Enemy extends Characters {
     private boolean meleeAttacking = false; // quai co dang tan cong can chien nguoi choi khong?
     private int cellSize;
     static final private int MEDIUM_DEPTH = 50;
-    static final private int HARD_DEPTH = 160;
+    static final private int HARD_DEPTH = 100;
 
 
     public Enemy(String name, Vector2 position, float rotation, Vector2 scale, Sprite sprite,
@@ -124,19 +124,19 @@ public class Enemy extends Characters {
                 min = dist;
                 next = Direction.RIGHT;
             }
-            dist = bfs_dist(this.position.x - this.speed, this.position.y, HARD_DEPTH);
+            dist = bfs_dist(this.position.x - this.speed, this.position.y, MEDIUM_DEPTH);
             if (dist < min &&
                     !tileMap.hitAWall(this.position.x - this.speed, this.position.y, 15, 6)){
                 min = dist;
                 next = Direction.LEFT;
             }
-            dist = bfs_dist(this.position.x, this.position.y + this.speed, HARD_DEPTH);
+            dist = bfs_dist(this.position.x, this.position.y + this.speed, MEDIUM_DEPTH);
             if (dist < min &&
                     !tileMap.hitAWall(this.position.x, this.position.y + this.speed, 15, 6)){
                 min = dist;
                 next = Direction.UP;
             }
-            dist = bfs_dist(this.position.x, this.position.y - this.speed, HARD_DEPTH);
+            dist = bfs_dist(this.position.x, this.position.y - this.speed, MEDIUM_DEPTH);
             if (dist < min &&
                     !tileMap.hitAWall(this.position.x, this.position.y - this.speed, 15, 6)){
                 min = dist;
