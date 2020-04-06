@@ -34,7 +34,7 @@ public class GameScreen implements Screen, InputProcessor {
 	ArrayList<Enemy> enemies;
 
 	float countDownNewEnemy = 1;
-	int   maxEnemy 			= 10;
+	int   maxEnemy 			= 7;
 	int countEnemy 			= 0;
 
     public GameScreen(SimpleRPGGame game, Difficulty difficulty, int[][] map){
@@ -99,7 +99,7 @@ public class GameScreen implements Screen, InputProcessor {
 
 		countDownNewEnemy -= delta;
 		if (countDownNewEnemy <= 0 && countEnemy < maxEnemy) {
-			countDownNewEnemy = 5;
+			countDownNewEnemy = 7;
 			int rand_int = rd.nextInt(2);
 			try {
 				Enemy newEnemy;
@@ -241,7 +241,7 @@ public class GameScreen implements Screen, InputProcessor {
 			parent.changeScreen(SimpleRPGGame.PAUSE);
 			return true;
 		} else if (keycode == Input.Keys.SPACE) {
-			bullets.add(new Bullet(player.position, player.getDirection(), tileMap.getMapWidth(), tileMap.getMapHeight(), false));
+			bullets.add(new Bullet(new Vector2(player.position.x + 15, player.position.y + 15), player.getDirection(), tileMap.getMapWidth(), tileMap.getMapHeight(), false));
 			return true;
 		} else if (keycode == Input.Keys.H){
 			// bat CHEAT MODE
@@ -289,7 +289,7 @@ public class GameScreen implements Screen, InputProcessor {
 			float x = mousePos.x - player.getPosition().x;
 			float y = mousePos.y - player.getPosition().y;
 			float denominator = Math.abs(x) + Math.abs(y);
-			bullets.add(new Bullet(player.position, new Vector2(x / denominator, y / denominator),
+			bullets.add(new Bullet(new Vector2(player.position.x + 15, player.position.y + 15), new Vector2(x / denominator, y / denominator),
 					tileMap.getMapWidth(), tileMap.getMapHeight(), false));
 			return true;
 		}
@@ -309,7 +309,7 @@ public class GameScreen implements Screen, InputProcessor {
 			float x = mousePos.x - player.getPosition().x;
 			float y = mousePos.y - player.getPosition().y;
 			float denominator = Math.abs(x) + Math.abs(y);
-			bullets.add(new Bullet(player.position, new Vector2(x / denominator, y / denominator),
+			bullets.add(new Bullet(new Vector2(player.position.x + 15, player.position.y + 15), new Vector2(x / denominator, y / denominator),
 					tileMap.getMapWidth(), tileMap.getMapHeight(), false));
 			return true;
 		}
